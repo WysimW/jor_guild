@@ -1,0 +1,57 @@
+/* src/styles/RaidList.css */
+
+.raid-list {
+    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    color: #f4f4f4;
+    font-family: 'Lora', serif;
+}
+
+.raid-list h2 {
+    font-family: 'Cinzel Decorative', serif;
+    color: #ffd700; /* Or */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.raid-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.raid-list li {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.raid-list li h3 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700; /* Or */
+    margin-bottom: 5px;
+}
+
+.raid-list li p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.raid-list li a {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    text-decoration: none;
+    background-color: #b22222;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.raid-list li a:hover {
+    background-color: #ff9900;
+}

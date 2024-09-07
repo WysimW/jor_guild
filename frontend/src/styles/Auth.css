@@ -1,0 +1,140 @@
+/* src/styles/SignUp.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
+  color: #f4f4f4;
+}
+
+.signup-container h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.5rem;
+  color: #ffd700;
+  margin-bottom: 20px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.signup-form label {
+  font-family: 'Lora', serif;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.signup-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1c1c1c;
+  color: #f4f4f4;
+  transition: border-color 0.3s;
+}
+
+.signup-form input:focus {
+  border-color: #ffd700;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.signup-button {
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  background-color: #b22222; /* Rouge foncé */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.signup-button:hover {
+  background-color: #ffd700; /* Or au survol */
+  transform: scale(1.05);
+}
+
+.signup-message {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #ffd700;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
+    color: #f4f4f4;
+  }
+  
+  .login-container h2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.5rem;
+    color: #ffd700;
+    margin-bottom: 20px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+  
+  .login-form label {
+    font-family: 'Lora', serif;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #ccc;
+  }
+  
+  .login-form input {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #1c1c1c;
+    color: #f4f4f4;
+    transition: border-color 0.3s;
+  }
+  
+  .login-form input:focus {
+    border-color: #ffd700;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+  }
+  
+  .login-button {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    background-color: #b22222; /* Rouge foncé */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #ffd700; /* Or au survol */
+    transform: scale(1.05);
+  }
+  
+  .login-message {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #ffd700;
+  }

@@ -1,0 +1,16 @@
+/* src/styles/Footer.css */
+.footer {
+  background-color: #0d0d0d;
+  color: #777;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #1f1f1f;
+  position: relative;
+  z-index: 2; /* Le footer passe devant l'overlay */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+}

@@ -1,0 +1,75 @@
+/* src/styles/Home.css */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
+
+.home {
+  background-image: url('../../public/images/wow-modern-background.webp'); /* Fond immersif */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: #f4f4f4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Overlay */
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Couche sombre devant l'image */
+  z-index: 1; /* L'overlay doit être derrière le header et le contenu */
+}
+
+.home-content {
+  position: relative;
+  z-index: 2; /* Le contenu passe devant l'overlay */
+  text-align: center;
+  padding: 100px 20px;
+  color: #f4f4f4;
+}
+
+h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  color: #ffd700; /* Or */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 20px;
+}
+
+p {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  margin-bottom: 50px;
+  color: #ccc;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.home-button {
+  background-color: #b22222; /* Rouge profond */
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  font-family: 'Cinzel', serif;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.home-button:hover {
+  background-color: #ffd700; /* Couleur or au survol */
+  box-shadow: 0 0 25px rgba(255, 255, 0, 0.5);
+  transform: scale(1.1);
+}

@@ -1,0 +1,54 @@
+/* src/styles/RaidDetails.css */
+
+.raid-details {
+    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    color: #f4f4f4;
+    font-family: 'Lora', serif;
+}
+
+.raid-details h2 {
+    font-family: 'Cinzel Decorative', serif;
+    color: #ffd700; /* Or */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.raid-details h3 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.raid-details p {
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.raid-details div {
+    margin-bottom: 20px;
+}
+
+.raid-details h4 {
+    font-family: 'Cinzel', serif;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.raid-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.raid-details ul li {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    color: #f4f4f4;
+}

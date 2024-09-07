@@ -1,0 +1,36 @@
+.tabs {
+    margin-top: 20px;
+}
+
+.tab-headers {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-headers button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Cinzel', serif;
+    color: #fff;
+    background-color: #b22222; /* Rouge profond */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.tab-headers button.active {
+    background-color: #ffd700; /* Or pour l'onglet actif */
+}
+
+.tab-headers button:hover {
+    background-color: #ff9900;
+}
+
+.tab-content {
+    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
+    padding: 20px;
+    border-radius: 10px;
+}

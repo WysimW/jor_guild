@@ -1,0 +1,247 @@
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Utiliser des polices modernes de Google */
+    background: url('/images/wow-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Overlay sombre */
+    z-index: -1;
+}
+
+/* Header styles */
+header {
+    background-color: rgba(30, 30, 30, 0.95);
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00; /* Couleur or pour un style WoW */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+header img {
+    width: 150px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #fff;
+}
+
+/* Main content styles */
+.container {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Légère transparence pour le fond */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+h1, h2 {
+    color: #ffcc00;
+    text-align: center;
+}
+
+/* Form styles */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+}
+
+form input[type="submit"],
+form button {
+    background-color: #ffcc00;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+    background-color: #ff9900;
+}
+
+/* Footer styles */
+footer {
+    background-color: rgba(30, 30, 30, 0.95);
+    text-align: center;
+    padding: 20px;
+    color: #ffcc00;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Table styles (for listing entities) */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #f0f0f0;
+}
+
+table th {
+    background-color: #333;
+    font-size: 18px;
+}
+
+table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    background-color: #ffcc00;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #ff9900;
+}
+
+/* Formulaires */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #ffcc00; /* Couleur or pour le texte */
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.2); /* Fond semi-transparent */
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #fff; /* Texte en blanc pour le contraste */
+    font-size: 16px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    transition: background-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus,
+form textarea:focus,
+form select:focus {
+    background-color: rgba(255, 255, 255, 0.4); /* Effet au focus */
+    outline: none;
+}
+
+form input[type="submit"],
+form button {
+    background-color: #ffcc00; /* Bouton or */
+    color: #000;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+    background-color: #ff9900; /* Changement de couleur au survol */
+}
+
+form .form-group {
+    margin-bottom: 20px;
+}
+
+.form-errors {
+    background-color: rgba(255, 0, 0, 0.7); /* Erreur en rouge transparent */
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}

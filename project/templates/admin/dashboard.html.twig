@@ -1,0 +1,30 @@
+{# templates/base.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Backoffice{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
+</head>
+<body>
+    <div class="overlay"></div>
+    <header>
+        <img src="/images/guilde-logo.png" alt="Logo de la guilde">
+        <nav>
+            <ul>
+                <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ path('admin_raid_new') }}">Nouveau Raid</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>Backoffice de la guilde WoW &copy; {{ "now"|date("Y") }}</p>
+    </footer>
+</body>
+</html>

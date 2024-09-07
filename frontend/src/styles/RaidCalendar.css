@@ -1,0 +1,44 @@
+/* src/styles/RaidCalendar.css */
+
+.raid-calendar {
+    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    color: #f4f4f4;
+    font-family: 'Lora', serif;
+}
+
+.raid-calendar h2 {
+    font-family: 'Cinzel Decorative', serif;
+    color: #ffd700; /* Or */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styles FullCalendar */
+.fc {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.fc-daygrid-event {
+    background-color: #b22222; /* Rouge profond */
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.fc-daygrid-event:hover {
+    background-color: #ffd700; /* Couleur or au survol */
+    color: #000;
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+cursor:pointer;
+}
