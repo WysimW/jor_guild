@@ -1,57 +1,263 @@
-/* src/styles/RaidList.css */
 
+/* Style général de la liste de raids */
 .raid-list {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 20px auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    color: #f4f4f4;
-    font-family: 'Lora', serif;
+    background-color: var(--background-dark);
+    padding: var(--padding-m);
+    border-radius: var(--border-radius);
+    max-width: 1000px;
+    margin: var(--margin-m) auto;
+    box-shadow: var(--shadow-light);
+    color: var(--text-color-light);
+    font-family: var(--font-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.raid-list h2 {
-    font-family: 'Cinzel Decorative', serif;
-    color: #ffd700; /* Or */
+.raid-list__title {
+    font-family: var(--font-title);
+    color: var(--color-gold);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: var(--margin-m);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    font-size: var(--font-size-xxl);
 }
 
-.raid-list ul {
-    list-style-type: none;
+/* Sélecteur de personnages */
+.raid-list__character-select {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--margin-m);
+    width: 100%;
+}
+
+.raid-list__character-select select {
+    background-color: var(--background-light);
+    color: var(--text-color-light);
+    padding: var(--padding-s);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-gold);
+    flex-grow: 1;
+}
+
+.raid-list__character-select--inputs {
+    display: flex;
+    gap: var(--space-m);
+    align-items: center;
+}
+
+/* Bouton d'ajout de personnage */
+.raid-list__add-character-btn {
+    border: 1px solid var(--color-gold);
+    background-color: var(--background-light);
+    color: var(--text-color-light);
+    padding: var(--padding-s) var(--padding-m);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-nav);
+    gap: 2px;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+
+.raid-list__add-character-btn:hover {
+    background-color: var(--color-red-hover);
+    transform: scale(1.05);
+}
+
+select option {
+    background-color: var(--background-light);
+    color: black;
+    font-family: var(--font-nav);
+    font-size: 0.8rem;
+}
+
+
+/* Liste des raids */
+.raid-list__items {
+    list-style: none;
+    width: 100%;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--margin-s);
 }
 
-.raid-list li {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+.raid-list__item {
+    background-color: var(--background-light);
+    padding: var(--padding-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-.raid-list li h3 {
-    font-family: 'Cinzel', serif;
-    color: #ffd700; /* Or */
+.raid-list__item-links {
+    display: flex;
+}
+
+.raid-list__item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.raid-list__item-title {
+    font-family: var(--font-title);
+    color: var(--color-gold);
     margin-bottom: 5px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
 }
 
-.raid-list li p {
-    color: #ccc;
+.raid-list__item-description,
+.raid-list__item-date {
+    color: var(--text-color-gray);
+    margin-bottom: var(--margin-s);
+}
+
+/* Liens et boutons */
+.raid-list__item-link,
+.raid-list__item-button {
+    background-color: var(--color-red);
+    color: var(--text-color-light);
+    text-decoration: none;
+    padding: var(--padding-s) var(--padding-m);
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    font-family: var(--font-nav);
+    display: inline-block;
+    margin-right: 10px;
     margin-bottom: 10px;
 }
 
-.raid-list li a {
-    font-family: 'Cinzel', serif;
-    color: #ffd700;
-    text-decoration: none;
-    background-color: #b22222;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+.raid-list__item-link:hover,
+.raid-list__item-button:hover {
+    background-color: var(--color-red-hover);
+    transform: scale(1.05);
 }
 
-.raid-list li a:hover {
-    background-color: #ff9900;
+/* Notification */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-light);
+    z-index: 1000;
+    animation: fadeInOut 3s forwards;
+    font-family: var(--font-text);
+}
+
+.notification--error {
+    background-color: #dc3545;
+}
+
+/* Animation fade in/out */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Popup pour la création de personnages */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup__content {
+    background-color: var(--background-color);
+    padding: var(--padding-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.popup__content h3 {
+    font-family: var(--font-title);
+    color: var(--color-gold);
+    margin-bottom: var(--margin-m);
+}
+
+.popup__content label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color-light);
+}
+
+.popup__content input,
+.popup__content select {
+    width: 100%;
+    padding: var(--padding-s);
+    margin-bottom: var(--margin-m);
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--background-light);
+    color: var(--text-color-light);
+}
+
+.popup__content button {
+    background-color: var(--color-red);
+    color: var(--text-color-light);
+    padding: var(--padding-s) var(--padding-m);
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.popup__content button:hover {
+    background-color: var(--color-red-hover);
+    transform: scale(1.05);
+}
+
+/* Bouton de fermeture (croix) */
+.popup__close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+}
+
+.popup__close-btn:hover {
+    color: var(--color-red-hover);
 }

@@ -39,6 +39,10 @@ class Character
     #[ORM\OneToMany(targetEntity: RaidRegister::class, mappedBy: 'registredCharacter')]
     private Collection $raidRegisters;
 
+    #[ORM\ManyToOne(inversedBy: 'characters')]
+    #[Groups(['character:read', 'raid:read'])]
+    private ?Classe $classe = null;
+
     public function __construct()
     {
         $this->raidRoles = new ArrayCollection();
@@ -124,6 +128,18 @@ class Character
                 $raidRegister->setRegistredCharacter(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): static
+    {
+        $this->classe = $classe;
 
         return $this;
     }

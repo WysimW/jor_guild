@@ -1,18 +1,16 @@
 /* src/styles/Home.css */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
-
 .home {
-  background-image: url('../../public/images/wow-modern-background.webp'); /* Fond immersif */
-  background-size: cover;
+    background-image: url('../../public/images/wow-modern-background.webp'); /* Fond immersif */
+    background-size: cover;
     background-position: center;
     position: relative;
-    color: #f4f4f4;
+    color: var(--text-color);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-family: 'Lora', serif;
+    font-family: var(--font-text);
 }
 
 /* Overlay sombre pour renforcer l'aspect mystérieux */
@@ -22,7 +20,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--overlay-color);
     z-index: 1;
 }
 
@@ -30,82 +28,82 @@
     position: relative;
     z-index: 2;
     max-width: 800px;
-    padding: 20px;
-    color: #f4f4f4;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-    animation: fadeIn 2s ease-in-out;
+    padding: var(--space-m);
+    color: var(--text-color);
+    text-shadow: 2px 2px 8px var(--shadow-color);
+    animation: fadeIn var(--transition-speed) ease-in-out;
 }
 
 h2 {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 4rem;
-    color: #ffcc00; /* Doré moderne */
-    margin-bottom: 20px;
-    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+    font-family: var(--font-title);
+    font-size: var(--font-size-xxl);
+    color: var(--title-color);
+    margin-bottom: var(--space-m);
+    text-shadow: 4px 4px 10px var(--shadow-color);
 }
 
 .intro {
-    font-family: 'Lora', serif;
-    font-size: 1.7rem;
+    font-family: var(--font-text);
+    font-size: var(--font-size-l);
     color: #ddd;
-    margin-bottom: 40px;
+    margin-bottom: var(--space-l);
     line-height: 1.7;
-    animation: fadeIn 2.5s ease-in-out;
+    animation: fadeIn calc(var(--transition-speed) + 0.2s) ease-in-out;
 }
 
 .home-sections {
     display: flex;
     justify-content: space-around;
-    margin-top: 40px;
+    margin-top: var(--space-l);
 }
 
 .home-section {
     width: 45%;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
+    background-color: var(--section-bg-color);
+    padding: var(--padding-m);
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px var(--shadow-color);
 }
 
 h3 {
-    font-family: 'Cinzel', serif;
-    color: #ffcc00;
-    font-size: 2rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    font-family: var(--font-title);
+    color: var(--title-color);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-s);
+    text-shadow: 2px 2px 6px var(--shadow-color);
 }
 
 p {
-    font-family: 'Lora', serif;
-    font-size: 1.2rem;
+    font-family: var(--font-text);
+    font-size: var(--font-size-m);
     color: #ccc;
     line-height: 1.5;
 }
 
 /* CTA Buttons */
 .home-cta {
-    margin-top: 50px;
+    margin-top: var(--space-xl);
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: var(--space-l);
 }
 
 .cta-button {
-    background-color: #ff6600; /* Couleur épique orange */
-    color: #fff;
+    background-color: var(--button-color); 
+    color: var(--text-color);
     border: none;
-    padding: 15px 30px;
-    font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    padding: var(--padding-m);
+    font-family: var(--font-title);
+    font-size: var(--font-size-m);
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed), transform var(--transition-speed);
 }
 
 .cta-button:hover {
-    background-color: #ffcc00;
+    background-color: var(--button-hover-color);
     color: #000;
-    box-shadow: 0 0 20px rgba(255, 204, 0, 0.7);
+    box-shadow: 0 0 20px var(--hover-shadow-color);
     transform: scale(1.05);
 }
 

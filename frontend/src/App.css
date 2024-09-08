@@ -1,3 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap'); /* Import Merriweather */
+
+:root {
+  --navbar-background-color: rgb(32, 29, 29);
+  --background-color: #170e09;
+  --text-color: #f4f4f4;
+  --title-color: #ffd700;
+  --button-color: #a50b0b;
+  --button-hover-color: #ffcc00;
+  --link-hover-color: #ffcc00;
+  --link-hover-bg: rgba(255, 204, 0, 0.8); /* Couleur de fond au hover */
+  --background-dark: rgba(0, 0, 0, 0.7);
+  --background-light: rgba(255, 255, 255, 0.1);
+  --color-gold: #ffd700;
+  --color-red: #b22222;
+  --color-red-hover: #ff9900;
+  --text-color-light: #f4f4f4;
+  --text-color-gray: #ccc;
+
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-shadow-color: rgba(0, 0, 0, 0.2);
+  --section-bg-color: rgba(0, 0, 0, 0.5);
+  --overlay-color: rgba(0, 0, 0, 0.6);
+  --border-radius: 10px;
+
+  --font-size-xxl: 4rem;
+  --font-size-xl: 2rem;
+  --font-size-l: 1.7rem;
+  --font-size-m: 1.2rem;
+  --font-size-s: 1rem;
+  --font-size-nav: 1rem; /* Taille de la police du menu */
+
+
+  --transition-speed: 0.3s;
+  --padding-all-m: 15px 30px;
+  --padding-m: 20px;
+  --padding-s: 10px;
+  --margin-m: 20px;
+  --margin-s: 10px;
+
+  --gap-nav: 20px;
+  --space-xs: 5px;
+  --space-s: 10px;
+  --space-m: 20px;
+  --space-l: 30px;
+  --space-xl: 40px;
+
+  --font-title: 'Cinzel Decorative', serif;
+  --font-text: 'Lora', serif;
+  --font-nav: 'Merriweather', serif; /* Nouvelle police serif pour le menu */
+
+}
+
 body {
-  background-color: black;
+  background-color: var(--background-color);
 }

@@ -1,6 +1,6 @@
 /* src/styles/Footer.css */
 .footer {
-  background-color: #0d0d0d;
+  background-color: var(--navbar-background-color);
   color: #777;
   text-align: center;
   padding: 20px;

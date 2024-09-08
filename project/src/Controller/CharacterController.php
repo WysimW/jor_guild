@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use App\Entity\Role;
+use App\Entity\Classe;
 use App\Entity\Character;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,29 +100,29 @@ class CharacterController extends AbstractController
     public function addCharacter(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $user = $this->getUser(); // Récupérer l'utilisateur connecté
-
+    
         if (!$user) {
             throw new AccessDeniedException('Vous devez être connecté pour créer un personnage.');
         }
-
+    
         $data = json_decode($request->getContent(), true);
-
-        // Récupérer le rôle depuis la base de données
-        $role = $em->getRepository(Role::class)->find($data['role_id']);
-        if (!$role) {
-            return new JsonResponse(['error' => 'Rôle non trouvé.'], 404);
+    
+        // Récupérer la classe depuis la base de données
+        $classe = $em->getRepository(Classe::class)->find($data['classe_id']);
+        if (!$classe) {
+            return new JsonResponse(['error' => 'Classe non trouvée.'], 404);
         }
-
+    
         // Créer le nouveau personnage
         $character = new Character();
         $character->setName($data['name']);
-        $character->addRaidRole($role); // Associer le rôle au personnage
+        $character->setClasse($classe); // Associer la classe au personnage
         $character->setUser($user); // Associer le personnage à l'utilisateur connecté
-
+    
         // Sauvegarder le personnage dans la base de données
         $em->persist($character);
         $em->flush();
-
+    
         return new JsonResponse(['message' => 'Personnage créé avec succès.'], 201);
     }
 }

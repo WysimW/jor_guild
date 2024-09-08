@@ -7,8 +7,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
-  color: #f4f4f4;
+  color: var(--text-color);
 }
 
 .signup-container h2 {
@@ -37,8 +36,7 @@
   font-size: 1.1rem;
   border: 1px solid #444;
   border-radius: 5px;
-  background-color: #1c1c1c;
-  color: #f4f4f4;
+  color: var(--text-color);
   transition: border-color 0.3s;
 }
 
@@ -52,7 +50,7 @@
   padding: 12px 20px;
   font-size: 1.2rem;
   background-color: #b22222; /* Rouge foncé */
-  color: #fff;
+  color: var(--text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -77,7 +75,7 @@
     justify-content: center;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
-    color: #f4f4f4;
+    color: var(--text-color);
   }
   
   .login-container h2 {
@@ -97,7 +95,7 @@
     font-family: 'Lora', serif;
     margin-bottom: 10px;
     font-size: 1.2rem;
-    color: #ccc;
+    color: var(--text-color);
   }
   
   .login-form input {
@@ -107,7 +105,7 @@
     border: 1px solid #444;
     border-radius: 5px;
     background-color: #1c1c1c;
-    color: #f4f4f4;
+    color: var(--text-color);
     transition: border-color 0.3s;
   }
   
@@ -121,7 +119,7 @@
     padding: 12px 20px;
     font-size: 1.2rem;
     background-color: #b22222; /* Rouge foncé */
-    color: #fff;
+    color: var(--text-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
