@@ -1,7 +1,28 @@
 
 /* Style général de la liste de raids */
+.raid-list-wrapper {
+    position: relative;
+    background-image: url('../../public/images/nerubar.jpg'); /* Image de fond */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: var(--padding-m);
+    min-height: 79vh;
+}
+
+.raid-list-wrapper--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.247); /* Couche sombre */
+    z-index: 1; /* Placer l'overlay derrière le contenu */
+}
+
 .raid-list {
-    background-color: var(--background-dark);
+    position: relative;
+    z-index: 2; /* Contenu au-dessus de l'overlay */
     padding: var(--padding-m);
     border-radius: var(--border-radius);
     max-width: 1000px;
@@ -12,6 +33,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.raid-list__content {
+    position: relative;
+    z-index: 2; /* Le contenu doit être devant l'overlay */
+    width: 100%;
 }
 
 .raid-list__title {
@@ -35,10 +61,9 @@
 }
 
 .raid-list__character-select select {
-    background-color: var(--background-light);
+    background-color: var(--background-dark);
     color: var(--text-color-light);
     padding: var(--padding-s);
-    border-radius: var(--border-radius);
     border: 1px solid var(--color-gold);
     flex-grow: 1;
 }
@@ -52,10 +77,9 @@
 /* Bouton d'ajout de personnage */
 .raid-list__add-character-btn {
     border: 1px solid var(--color-gold);
-    background-color: var(--background-light);
+    background-color: var(--background-dark);
     color: var(--text-color-light);
     padding: var(--padding-s) var(--padding-m);
-    border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -83,15 +107,14 @@ select option {
     list-style: none;
     width: 100%;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--margin-s);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes égales */
+    gap: var(--margin-s); /* Espace entre les éléments */
 }
 
 .raid-list__item {
-    background-color: var(--background-light);
+    background-color: var(--background-dark);
     padding: var(--padding-m);
-    border-radius: var(--border-radius);
     box-shadow: var(--shadow-dark);
     display: flex;
     flex-direction: column;
@@ -121,6 +144,10 @@ select option {
     margin-bottom: var(--margin-s);
 }
 
+.raid-list__item-date--dateformat {
+    text-transform:capitalize;
+}
+
 /* Liens et boutons */
 .raid-list__item-link,
 .raid-list__item-button {
@@ -128,7 +155,6 @@ select option {
     color: var(--text-color-light);
     text-decoration: none;
     padding: var(--padding-s) var(--padding-m);
-    border-radius: var(--border-radius);
     border: none;
     cursor: pointer;
     transition: background-color var(--transition-speed), transform var(--transition-speed);
@@ -231,18 +257,25 @@ select option {
     color: var(--text-color-light);
 }
 
+.popup--confirm-btn {
+    background-color: var(--button-color);
+}
+
+.popup--confirm-btn:hover {
+    background-color: var(--button-hover-color);
+    color: var(--text-color-negative);
+}
+
+
 .popup__content button {
-    background-color: var(--color-red);
     color: var(--text-color-light);
     padding: var(--padding-s) var(--padding-m);
-    border-radius: var(--border-radius);
     border: none;
     cursor: pointer;
     transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
 .popup__content button:hover {
-    background-color: var(--color-red-hover);
     transform: scale(1.05);
 }
 
@@ -260,4 +293,10 @@ select option {
 
 .popup__close-btn:hover {
     color: var(--color-red-hover);
+}
+
+.popup h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    padding: 0 40px;
 }

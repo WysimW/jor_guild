@@ -127,4 +127,11 @@ class Raid
 
         return $this;
     }
+
+    // Ajoutez cette méthode pour formater la date
+    #[Groups(['raid:read'])]
+    public function getFormattedDate(): ?string
+    {
+        return $this->date ? $this->date->format('l d à H\h') : null;
+    }
 }

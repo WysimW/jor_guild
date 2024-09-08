@@ -24,22 +24,56 @@ class RaidController extends AbstractController
     }
 
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
-public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
-{
-    $raid = $em->getRepository(Raid::class)->find($id);
-    if (!$raid) {
-        return new JsonResponse(['error' => 'Raid non trouvé'], 404);
+    public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        // Récupérer le raid par son ID
+        $raid = $em->getRepository(Raid::class)->find($id);
+        if (!$raid) {
+            return new JsonResponse(['error' => 'Raid non trouvé'], 404);
+        }
+    
+        // Récupérer les inscriptions au raid
+        $inscriptions = $em->getRepository(RaidRegister::class)->findBy(['raid' => $raid]);
+    
+        // Préparer un tableau contenant les informations complètes sur les inscriptions
+        $inscriptionsData = [];
+        foreach ($inscriptions as $inscription) {
+            $character = $inscription->getRegistredCharacter();
+            
+            // Gérer les spécialisations liées à l'inscription (ManyToMany)
+            $specializationsData = [];
+            foreach ($inscription->getRegistredSpecialization() as $specialization) {
+                $specializationsData[] = [
+                    'id' => $specialization->getId(),
+                    'name' => $specialization->getName(),
+                    'role' => $specialization->getSpeRole(),
+                ];
+            }
+    
+            // Ajouter les données de l'inscription à l'ensemble
+            $inscriptionsData[] = [
+                'id' => $inscription->getId(),
+                'registredCharacter' => [
+                    'id' => $character->getId(),
+                    'name' => $character->getName(),
+                    'classe' => [
+                        'id' => $character->getClasse()->getId(),
+                        'name' => $character->getClasse()->getName(),
+                    ],
+                    'specializations' => $specializationsData, // Ajout des spécialisations
+                ],
+                'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
+            ];
+        }
+    
+        // Renvoyer les détails du raid avec les inscriptions complètes
+        return $this->json([
+            'title' => $raid->getTitle(),
+            'description' => $raid->getDescription(),
+            'date' => $raid->getDate()->format(\DateTime::ATOM), // Envoyer la date brute au format ISO 8601
+            'inscriptions' => $inscriptionsData,
+        ], 200, [], ['groups' => 'raid:read']);
     }
-
-    // Récupérer les inscriptions au raid (triées par rôle)
-    $inscriptions = $em->getRepository(RaidRegister::class)->findBy(['raid' => $raid]);
-
-    return $this->json([
-        'title' => $raid->getTitle(),
-        'description' => $raid->getDescription(),
-        'inscriptions' => $inscriptions,
-    ], 200, [], ['groups' => 'raid:read']);
-}
 
     #[Route('/api/raids/{id}', name: 'read_raid', methods: ['GET'])]
     public function read(int $id, EntityManagerInterface $em): JsonResponse

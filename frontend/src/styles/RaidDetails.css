@@ -1,54 +1,106 @@
-/* src/styles/RaidDetails.css */
+.raid-details-container {
+    position: relative;
+    background-image: url('../../public/images/nerubar.jpg'); /* Image de fond */
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    padding: var(--padding-m);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.247); /* Couche sombre */
+    z-index: 1;
+}
 
 .raid-details {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 20px auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    color: #f4f4f4;
-    font-family: 'Lora', serif;
+    position: relative;
+    z-index: 2;
+    background-color: rgba(15, 15, 15, 0.8); /* Fond sombre */
+    padding: var(--padding-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    max-width: 1000px;
+    width: 90%;
+    color: var(--text-color-light);
+    font-family: var(--font-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.raid-details h2 {
+.raid-details__title {
     font-family: 'Cinzel Decorative', serif;
-    color: #ffd700; /* Or */
+    color: var(--title-color);
+    margin-bottom: var(--margin-m);
     text-align: center;
-    margin-bottom: 20px;
+    font-size: var(--font-size-xxl);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-.raid-details h3 {
+.raid-details__description {
+    font-size: var(--font-size-l);
+    color: var(--text-color-gray);
+    margin-bottom: var(--margin-l);
+    text-align: center;
+}
+
+.raid-details__date {
+    font-size: var(--font-size-l);
+    color: var(--text-color-gray);
+    margin-bottom: var(--margin-l);
+}
+
+.raid-details__date--formatted {
+    font-weight: bold;
+}
+
+.raid-details__subheading {
     font-family: 'Cinzel', serif;
-    color: #ffd700;
-    margin-bottom: 10px;
+    color: var(--color-gold);
+    margin-top: var(--margin-m);
+    margin-bottom: var(--margin-s);
+    font-size: var(--font-size-xl);
+    text-align: center;
 }
 
-.raid-details p {
-    color: #ccc;
-    margin-bottom: 20px;
+/* Grid pour les rôles */
+.raid-details__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Trois colonnes pour Tank, Heal, DPS */
+    gap: var(--gap-m);
+    width: 100%;
+    justify-items: center;
 }
 
-.raid-details div {
-    margin-bottom: 20px;
+.raid-details__role-column {
+    text-align: center;
 }
 
-.raid-details h4 {
+.raid-details__role-title {
     font-family: 'Cinzel', serif;
-    color: #ffd700;
-    margin-bottom: 10px;
+    color: var(--color-gold);
+    margin-bottom: var(--margin-m);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
-.raid-details ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.raid-details ul li {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 10px;
+/* Styles des étiquettes pour les classes des personnages */
+.character-badge {
+    display: inline-block;
+    padding: 5px 10px;
     border-radius: 5px;
-    margin-bottom: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    color: #f4f4f4;
+    color: #fff;
+    margin-bottom: var(--margin-s);
+    cursor: pointer; /* Ajout d'un pointeur pour indiquer qu'il y a une action au survol */
+}
+
+.character-badge__name {
+    font-family: var(--);
+    font-size: var(--font-size-m);
 }

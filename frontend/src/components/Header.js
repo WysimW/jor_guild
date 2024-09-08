@@ -15,34 +15,36 @@ const Header = () => {
   };
 
   return (
-      <header className="header">
-          <div className="logo">
-              <img src="/images/guilde-logo.png" alt="Logo de la guilde" className="guild-logo" />
-              <h1>Guilde JOR</h1>
-          </div>
-          <nav className="nav-links">
-              <Link to="/">Accueil</Link>
-              <Link to="/raids">Raids</Link> {/* Lien vers la page des raids */}
-              <Link to="/raid/calendar">Calendrier</Link> {/* Lien vers la page des raids */}
+    <header className="header">
+        <nav className="nav-links nav-left">
+            <Link className='nav-links--items' to="/">Accueil</Link>
+            <Link className='nav-links--items' to="/raids">Raids</Link>
+            <Link className='nav-links--items' to="/raid/calendar">Calendrier</Link>
+        </nav>
 
-              {token ? ( // Si l'utilisateur est connecté
-                  <>
-                      <Link to="/dashboard" className="nav-icon"> {/* Remplacer Dashboard par Profil */}
-                          <FontAwesomeIcon icon={faUser} /> Profil
-                      </Link>
-                      <button className="nav-icon logout-button" onClick={handleLogout}>
-                          <FontAwesomeIcon icon={faSignOutAlt} /> {/* Icône pour déconnexion */}
-                      </button>
-                  </>
-              ) : ( // Si l'utilisateur n'est pas connecté
-                  <>
-                      <Link to="/signup">S'inscrire</Link>
-                      <Link to="/login">Se connecter</Link>
-                  </>
-              )}
-          </nav>
-      </header>
-  );
+        <div className="logo">
+            <img src="/images/guilde-logo.png" alt="Logo de la guilde" className="guild-logo" />
+        </div>
+
+        <nav className="nav-links nav-right">
+            {token ? ( // Si l'utilisateur est connecté
+                <>
+                    <Link to="/dashboard" className="nav-icon nav-links--items">
+                         Profil
+                    </Link>
+                    <Link className='nav-links--items'  to="/" onClick={handleLogout}>Se déconnecter</Link>
+
+                </>
+            ) : (
+                <>
+                    <Link className='nav-links--items'  to="/signup">S'inscrire</Link>
+                    <Link className='nav-links--items' to="/login">Se connecter</Link>
+                </>
+            )}
+        </nav>
+    </header>
+);
+
 };
 
 export default Header;

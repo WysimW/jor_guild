@@ -9,32 +9,15 @@ const Home = () => {
         <div className="home-content">
           <h2>The War Within</h2>
           <p className="intro">
-            Plongez dans les ténèbres et affrontez la plus grande menace qu'Azeroth ait jamais connue. En cette période de guerre intérieure, les héros doivent trouver leur force la plus profonde pour survivre.
+          Bienvenue dans la Guilde JOR ! Rejoignez une communauté de héros unis par l’aventure et la camaraderie. Que vous soyez un vétéran aguerri ou un nouveau venu, ensemble, nous conquérons Azeroth et relevons chaque défi.
           </p>
 
-          <div className="home-sections">
-            <div className="home-section">
-              <h3>Les Secrets d'Azeroth</h3>
-              <p>
-                Explorez des territoires inconnus et découvrez les secrets cachés de ce monde déchiré.
-              </p>
-            </div>
-
-            <div className="home-section">
-              <h3>Nouvelle Puissance</h3>
-              <p>
-                Maîtrisez les nouvelles capacités et choisissez votre camp dans cette lutte pour la survie d'Azeroth.
-              </p>
-            </div>
-          </div>
 
           <div className="home-cta">
             <Link to="/raids">
               <button className="cta-button">Voir les Raids</button>
             </Link>
-            <Link to="/signup">
-              <button className="cta-button">Rejoindre la Guilde</button>
-            </Link>
+
           </div>
         </div>
       </div>

@@ -1,26 +1,28 @@
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--padding-all-m);
+  padding: 30px 40px;
   background-color: var(--navbar-background-color);
   color: var(--text-color);
+  position: relative;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .guild-logo {
-  height: 50px;
-  margin-right: var(--gap-nav);
+  height: 75px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-h1 {
-  font-family: var(--font-title);
-  color: var(--title-color); /* Or */
+/* Hover stylisé sur le logo */
+.guild-logo:hover {
+  transform: scale(1.1) rotate(5deg); /* Zoom et légère rotation */
 }
 
 .nav-links {
@@ -28,54 +30,65 @@ h1 {
   gap: var(--gap-nav);
 }
 
-.nav-links a, .logout-button {
+.nav-left {
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.nav-right {
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.nav-links .nav-links--items {
+  position: relative;
   text-decoration: none;
-  font-family: var(--font-nav); /* Utilisation de Merriweather pour le menu */
-  font-weight: 700; /* Texte plus épais */
+  font-family: var(--font-nav);
+  font-weight: 700;
   color: var(--text-color);
   font-size: var(--font-size-nav);
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  border: none;
+  transition: color 0.3s ease; /* Transition de couleur du texte */
   cursor: pointer;
   display: flex;
   align-items: center;
 }
 
-.nav-links a {
-  background-color: transparent; /* Liens sans fond par défaut */
+.nav-links .nav-links--items::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--link-hover-bg); /* Couleur du soulignement */
+  transition: width 0.3s ease;
 }
 
-.nav-links a:hover {
-  background-color: var(--link-hover-bg); /* Couleur de fond au hover */
-  color: #000;
-  transform: scale(1.05); /* Zoom léger au hover */
-  box-shadow: var(--link-hover-shadow); /* Ombre pour effet de bouton */
+.nav-links a:hover::after, .logout-button:hover::after {
+  width: 100%; /* Le soulignement prend toute la largeur au survol */
 }
 
-/* Style des icônes de navigation */
+.nav-links a:hover, .logout-button:hover {
+  color: var(--text-color); /* Changement de couleur au survol */
+}
+
 .nav-icon {
   display: flex;
   align-items: center;
-  gap: var(--gap-nav);
+  gap: 10px;
 }
 
-/* Style spécifique pour le bouton de déconnexion */
 .logout-button {
   background-color: var(--button-color);
-  font-family: var(--font-nav); /* Utilisation de Merriweather pour cohérence */
   color: #fff;
   padding: 10px 15px;
   border-radius: 5px;
   box-shadow: 0 0 10px var(--shadow-color);
   transition: background-color var(--transition-speed), transform var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
-  cursor: pointer;
-  border: none;
 }
 
 .logout-button:hover {
-  background-color: var(--button-hover-color); /* Rouge vif au survol */
+  background-color: var(--button-hover-color);
   transform: scale(1.1);
   box-shadow: var(--hover-shadow-color);
 }

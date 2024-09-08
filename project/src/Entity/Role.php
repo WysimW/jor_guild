@@ -27,9 +27,16 @@ class Role
     #[ORM\ManyToMany(targetEntity: Character::class, mappedBy: 'raidRoles')]
     private Collection $characters;
 
+    /**
+     * @var Collection<int, Specialization>
+     */
+    #[ORM\OneToMany(targetEntity: Specialization::class, mappedBy: 'speRole')]
+    private Collection $specializations;
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
+        $this->specializations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +79,36 @@ class Role
     {
         if ($this->characters->removeElement($character)) {
             $character->removeRaidRole($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Specialization>
+     */
+    public function getSpecializations(): Collection
+    {
+        return $this->specializations;
+    }
+
+    public function addSpecialization(Specialization $specialization): static
+    {
+        if (!$this->specializations->contains($specialization)) {
+            $this->specializations->add($specialization);
+            $specialization->setSpeRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialization(Specialization $specialization): static
+    {
+        if ($this->specializations->removeElement($specialization)) {
+            // set the owning side to null (unless already changed)
+            if ($specialization->getSpeRole() === $this) {
+                $specialization->setSpeRole(null);
+            }
         }
 
         return $this;

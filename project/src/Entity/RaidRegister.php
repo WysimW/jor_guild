@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RaidRegisterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -26,6 +28,17 @@ class RaidRegister
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
     private ?\DateTimeInterface $registeredDate = null;
+
+    /**
+     * @var Collection<int, Specialization>
+     */
+    #[ORM\ManyToMany(targetEntity: Specialization::class, inversedBy: 'raidRegisters')]
+    private Collection $registredSpecialization;
+
+    public function __construct()
+    {
+        $this->registredSpecialization = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -64,6 +77,30 @@ class RaidRegister
     public function setRegisteredDate(\DateTimeInterface $registeredDate): static
     {
         $this->registeredDate = $registeredDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Specialization>
+     */
+    public function getRegistredSpecialization(): Collection
+    {
+        return $this->registredSpecialization;
+    }
+
+    public function addRegistredSpecialization(Specialization $registredSpecialization): static
+    {
+        if (!$this->registredSpecialization->contains($registredSpecialization)) {
+            $this->registredSpecialization->add($registredSpecialization);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistredSpecialization(Specialization $registredSpecialization): static
+    {
+        $this->registredSpecialization->removeElement($registredSpecialization);
 
         return $this;
     }

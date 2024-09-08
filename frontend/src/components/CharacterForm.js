@@ -4,32 +4,30 @@ import '../styles/Dashboard.css'; // Importer le fichier de styles
 
 const CharacterForm = () => {
     const [name, setName] = useState('');
-    const [roleId, setRoleId] = useState(''); // Stocker l'ID du rôle sélectionné
-    const [roles, setRoles] = useState([]); // Stocker la liste des rôles
+    const [classeId, setClasseId] = useState(''); // Stocker l'ID de la classe sélectionnée
+    const [classes, setClasses] = useState([]); // Stocker la liste des classes
     const [message, setMessage] = useState('');
 
-    // Récupérer la liste des rôles depuis l'API
+    // Récupérer la liste des classes depuis l'API
     useEffect(() => {
-        const fetchRoles = async () => {
+        const fetchClasses = async () => {
             try {
-                const response = await axios.get('/roles');
-                setRoles(response.data);
+                const response = await axios.get('/classes'); // Remplacer '/roles' par '/classes' pour récupérer les classes
+                setClasses(response.data);
             } catch (error) {
-                console.error('Erreur lors de la récupération des rôles :', error);
+                console.error('Erreur lors de la récupération des classes :', error);
             }
         };
 
-        fetchRoles();
+        fetchClasses();
     }, []);
-
-    console.log(roles)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/character/create', {
                 name: name,
-                role_id: roleId, // Envoyer l'ID du rôle sélectionné
+                classe_id: classeId, // Envoyer l'ID de la classe sélectionnée
             });
             setMessage('Personnage créé avec succès !');
         } catch (error) {
@@ -51,17 +49,17 @@ const CharacterForm = () => {
                     required
                 />
 
-                <label htmlFor="role">Rôle :</label>
+                <label htmlFor="classe">Classe :</label>
                 <select
-                    id="role"
-                    value={roleId}
-                    onChange={(e) => setRoleId(e.target.value)}
+                    id="classe"
+                    value={classeId}
+                    onChange={(e) => setClasseId(e.target.value)}
                     required
                 >
-                    <option value="">Sélectionner un rôle</option>
-                    {roles.length > 0 && roles.map((role, index) => (
-                        <option key={role.id || index} value={role.id}> {/* Ajout d'une clé alternative */}
-                            {role.name}
+                    <option value="">Sélectionner une classe</option>
+                    {classes.length > 0 && classes.map((classe, index) => (
+                        <option key={classe.id || index} value={classe.id}>
+                            {classe.name}
                         </option>
                     ))}
                 </select>

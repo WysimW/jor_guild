@@ -5,12 +5,13 @@
   --navbar-background-color: rgb(32, 29, 29);
   --background-color: #170e09;
   --text-color: #f4f4f4;
+  --text-color-negative: #161111;
   --title-color: #ffd700;
   --button-color: #a50b0b;
   --button-hover-color: #ffcc00;
   --link-hover-color: #ffcc00;
   --link-hover-bg: rgba(255, 204, 0, 0.8); /* Couleur de fond au hover */
-  --background-dark: rgba(0, 0, 0, 0.7);
+  --background-dark: rgba(0, 0, 0, 0.555);
   --background-light: rgba(255, 255, 255, 0.1);
   --color-gold: #ffd700;
   --color-red: #b22222;
@@ -39,7 +40,7 @@
   --margin-m: 20px;
   --margin-s: 10px;
 
-  --gap-nav: 20px;
+  --gap-nav: 40px;
   --space-xs: 5px;
   --space-s: 10px;
   --space-m: 20px;
@@ -54,4 +55,75 @@
 
 body {
   background-color: var(--background-color);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navbar-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:  rgb(61, 58, 58);
+  border-radius: 10px; 
+  border: 2px solid var(--navbar-background-color); 
+}
+
+h3 {
+  margin: 0;
+}
+
+/* Couleurs des badges selon la classe */
+.character-guerrier {
+  background-color: #C79C6E; /* Guerrier */
+}
+
+.character-mage {
+  background-color: #69CCF0; /* Mage */
+}
+
+.character-voleur {
+  background-color: #FFF569; /* Voleur */
+}
+
+.character-paladin {
+  background-color: #F58CBA; /* Paladin */
+}
+
+.character-chasseur {
+  background-color: #ABD473; /* Chasseur */
+}
+
+.character-démoniste {
+  background-color: #9482C9; /* Démoniste */
+}
+
+.character-druide {
+  background-color: #FF7D0A; /* Druide */
+}
+
+.character-chevalier {
+  background-color: #C41F3B; /* Chevalier de la mort */
+}
+
+.character-chaman {
+  background-color: #0070DE; /* Chaman */
+}
+
+.character-prêtre {
+  background-color: #FFFFFF; /* Prêtre */
+}
+
+.démons {
+  background-color: #A330C9 !important; /* Chasseur de démons */
+}
+
+.character-moine {
+  background-color: #00FF96; /* Moine */
+}
+
+.character-évocateur {
+  background-color: #33937F; /* Evoker */
 }
