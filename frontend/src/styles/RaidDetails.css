@@ -1,11 +1,13 @@
 .raid-details-container {
     position: relative;
-    background-image: url('../../public/images/nerubar.jpg'); /* Image de fond */
+    background-image: url('../../public/images/nerubar-palace-3.jpg'); /* Image de fond */
     background-size: cover;
     background-position: center;
     min-height: 80vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: var(--padding-m);
 }
 
@@ -24,7 +26,6 @@
     z-index: 2;
     background-color: rgba(15, 15, 15, 0.8); /* Fond sombre */
     padding: var(--padding-m);
-    border-radius: var(--border-radius);
     box-shadow: var(--shadow-light);
     max-width: 1000px;
     width: 90%;
@@ -32,7 +33,6 @@
     font-family: var(--font-text);
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .raid-details__title {
@@ -42,13 +42,13 @@
     text-align: center;
     font-size: var(--font-size-xxl);
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 3;
 }
 
 .raid-details__description {
     font-size: var(--font-size-l);
     color: var(--text-color-gray);
     margin-bottom: var(--margin-l);
-    text-align: center;
 }
 
 .raid-details__date {
@@ -59,6 +59,7 @@
 
 .raid-details__date--formatted {
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .raid-details__subheading {
@@ -67,7 +68,6 @@
     margin-top: var(--margin-m);
     margin-bottom: var(--margin-s);
     font-size: var(--font-size-xl);
-    text-align: center;
 }
 
 /* Grid pour les rôles */
@@ -94,13 +94,66 @@
 .character-badge {
     display: inline-block;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 3px;
     color: #fff;
     margin-bottom: var(--margin-s);
     cursor: pointer; /* Ajout d'un pointeur pour indiquer qu'il y a une action au survol */
 }
 
 .character-badge__name {
-    font-family: var(--);
+    font-family: var(--font-sans-serif);
     font-size: var(--font-size-m);
+    font-weight: 300;
+
+}
+
+.raid-details__role-column ul {
+display: flex;
+gap: var(--space-s);
+flex-wrap: wrap;
+}
+
+.raid-details__badge {
+    background-color: var(--color-gold); /* Couleur dorée pour le badge */
+    color: var(--text-color); /* Couleur du texte */
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-family: var(--font-nav);    
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: -20px;
+    display: inline-block;
+    z-index: 5;
+}
+
+.badge-mode-normal {
+background-color: var(--rarity-rare-color);
+}
+
+.badge-mode-héroïque {
+background-color: var(--rarity-epic-color);
+}
+
+.badge-mode-mythique {
+background-color: var(--rarity-legendary-color);
+color: black;
+}
+
+.raid-details__buttons {
+    display: flex;
+    gap:5px;
+}
+
+.raid-details__buffs-button, .raid-details__tokens-button, .raid-details__register-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--button-color);
+    color: var(--button-text);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.raid-details__buffs-button:hover, .raid-details__tokens-button:hover, .raid-details__register-button:hover {
+    background-color: var(--button-hover-color);
 }

@@ -40,6 +40,10 @@ class Raid
     #[ORM\OneToMany(targetEntity: RaidRegister::class, mappedBy: 'raid')]
     private Collection $raidRegisters;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
+    private ?string $mode = null;
+
     public function __construct()
     {
         $this->raidRegisters = new ArrayCollection();
@@ -133,5 +137,17 @@ class Raid
     public function getFormattedDate(): ?string
     {
         return $this->date ? $this->date->format('l d à H\h') : null;
+    }
+
+    public function getMode(): ?string
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?string $mode): static
+    {
+        $this->mode = $mode;
+
+        return $this;
     }
 }

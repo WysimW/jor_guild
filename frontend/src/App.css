@@ -1,6 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap'); /* Import Merriweather */
 
+/* Importation de CanalDemiRomain */
+@font-face {
+  font-family: 'CanalRomain';
+  src: url('./fonts/CanalDemiRomain.otf') format('opentype');
+  font-weight: 500; /* Poids intermédiaire */
+  font-style: normal;
+}
+
+/* Importation de CanalBoldRomain */
+@font-face {
+  font-family: 'CanalRomain';
+  src: url('./fonts/CanalBoldRomain.otf') format('opentype');
+  font-weight: 700; /* Gras */
+  font-style: normal;
+}
+
+/* Importation de CanalLightRomain */
+@font-face {
+  font-family: 'CanalRomain';
+  src: url('./fonts/CanalLightRomain.otf') format('opentype');
+  font-weight: 300; /* Poids léger */
+  font-style: normal;
+}
+
+
 :root {
   --navbar-background-color: rgb(32, 29, 29);
   --background-color: #170e09;
@@ -18,6 +43,13 @@
   --color-red-hover: #ff9900;
   --text-color-light: #f4f4f4;
   --text-color-gray: #ccc;
+
+  --rarity-poor-color: #9d9d9d;
+  --rarity-uncommon-color: #1eff00;
+  --rarity-rare-color: rgb(0,112,221);
+  --rarity-epic-color: rgb(163,53,238);
+  --rarity-legendary-color: #ff8000;
+  --rarity-artifact-color: #e6cc80	;
 
   --shadow-color: rgba(0, 0, 0, 0.1);
   --hover-shadow-color: rgba(0, 0, 0, 0.2);
@@ -50,6 +82,8 @@
   --font-title: 'Cinzel Decorative', serif;
   --font-text: 'Lora', serif;
   --font-nav: 'Merriweather', serif; /* Nouvelle police serif pour le menu */
+  --font-sans-serif: 'CanalRomain'; /* Nouvelle police serif pour le menu */
+
 
 }
 
@@ -126,4 +160,14 @@ h3 {
 
 .character-évocateur {
   background-color: #33937F; /* Evoker */
+}
+
+ul {
+  list-style-type: none; /* Supprime les puces de tous les <ul> */
+  padding: 0; /* Supprime le padding par défaut */
+  margin: 0; /* Supprime le margin par défaut */
+}
+
+button {
+  border: none;
 }

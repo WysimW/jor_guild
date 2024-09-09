@@ -18,10 +18,39 @@ class RaidController extends AbstractController
     public function browse(EntityManagerInterface $em): JsonResponse
     {
         $raids = $em->getRepository(Raid::class)->findAll();
-
-        // Utiliser le groupe de sérialisation 'raid:read'
-        return $this->json($raids, 200, [], ['groups' => 'raid:read']);
+    
+        // Préparer les données avec les personnages inscrits
+        $raidsData = [];
+    
+        foreach ($raids as $raid) {
+            $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
+    
+            $registeredCharacters = [];
+    
+            foreach ($inscriptions as $inscription) {
+                $character = $inscription->getRegistredCharacter();
+                $registeredCharacters[] = [
+                    'id' => $character->getId(),
+                    'name' => $character->getName(),
+                    'user' => [
+                        'id' => $character->getUser()->getId(),
+                        'username' => $character->getUser()->getEmail()
+                    ]
+                ];
+            }
+    
+            $raidsData[] = [
+                'id' => $raid->getId(),
+                'title' => $raid->getTitle(),
+                'description' => $raid->getDescription(),
+                'date' => $raid->getDate(),
+                'registeredCharacters' => $registeredCharacters, // Inclure les personnages inscrits
+            ];
+        }
+    
+        return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
+    
 
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
     public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
@@ -70,6 +99,7 @@ class RaidController extends AbstractController
         return $this->json([
             'title' => $raid->getTitle(),
             'description' => $raid->getDescription(),
+            'mode' => $raid->getMode(),
             'date' => $raid->getDate()->format(\DateTime::ATOM), // Envoyer la date brute au format ISO 8601
             'inscriptions' => $inscriptionsData,
         ], 200, [], ['groups' => 'raid:read']);

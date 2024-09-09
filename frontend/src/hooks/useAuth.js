@@ -9,6 +9,7 @@ export const useAuth = () => {
             const response = await api.post('/login_check', { email, password });
             localStorage.setItem('token', response.data.token);
             setToken(response.data.token);
+            console.log(response.data.token)
         } catch (error) {
             console.error('Erreur lors de la connexion', error);
         }

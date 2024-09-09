@@ -37,6 +37,7 @@ class AppFixtures extends Fixture
         $raid = new Raid();
         $raid->setTitle('Raid du Palais Nérubien');
         $raid->setDescription('Raid en mode normal, première soirée.');
+        $raid->setMode('Normal');
         $raid->setDate(new \DateTime('2024-09-12 21:00:00'));
 
         $manager->persist($raid);

@@ -1,0 +1,84 @@
+.popup {
+    color: var(--text-color);
+}
+
+.popup-buffs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.popup-buffs__content {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 650px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.popup-buffs__close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.popup-buffs__close-btn:hover {
+    color: var(--close-btn-hover-color);
+}
+
+.raid-details__buffs-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.popup-buffs h4 {
+    color: var(--color-gold);
+}
+
+.raid-details__buffs, .raid-details__utilities {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: start;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+
+.buff-active {
+    color: var(--rarity-uncommon-color);
+}
+
+.buff-inactive {
+    color: var(--rarity-poor-color);;
+}
+
+.buff-active, .utility-active {
+    color: green;
+}
+
+.buff-inactive, .utility-inactive {
+    color: red;
+}
+
+.token-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}

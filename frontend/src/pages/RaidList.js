@@ -11,18 +11,26 @@ const RaidList = () => {
   const [specializations, setSpecializations] = useState([]); // Stocker les spécialisations du personnage
   const [selectedCharacter, setSelectedCharacter] = useState(""); // Stocker le personnage sélectionné
   const [selectedSpecialization, setSelectedSpecialization] = useState(""); // Stocker la spécialisation sélectionnée
-  const [selectedCharacterDetails, setSelectedCharacterDetails] = useState(
-    null
-  ); // Stocker les détails du personnage
+  const [selectedCharacterDetails, setSelectedCharacterDetails] = useState(null); // Stocker les détails du personnage
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false); // Gérer l'état du popup d'inscription
   const [notification, setNotification] = useState(""); // Gérer les notifications
   const [selectedRaid, setSelectedRaid] = useState(null); // Stocker l'ID du raid sélectionné
 
+  const isUserRegistered = (raidId) => {
+    return raids.some(
+      (raid) =>
+        raid.id === raidId &&
+        raid.registeredCharacters?.some((character) =>
+          characters.some((userCharacter) => userCharacter.id === character.id)
+        )
+    );
+  };
+
   useEffect(() => {
     const fetchRaids = async () => {
       try {
-        const response = await axios.get("/raids"); // Récupérer la liste des raids
+        const response = await axios.get("/raids");
         setRaids(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des raids:", error);
@@ -34,205 +42,176 @@ const RaidList = () => {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const response = await axios.get("/characters/list"); // Récupérer les personnages de l'utilisateur
+        const response = await axios.get("/characters/list");
         setCharacters(response.data);
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des personnages :",
-          error
-        );
+        console.error("Erreur lors de la récupération des personnages :", error);
       }
     };
     fetchCharacters();
   }, []);
 
-  // Récupérer les spécialisations d'un personnage
-  const fetchSpecializations = async characterId => {
+  // Fetch specializations when a character is selected
+  const fetchSpecializations = async (characterId) => {
     try {
-      const response = await axios.get(
-        `/characters/${characterId}/specializations`
-      );
+      const response = await axios.get(`/characters/${characterId}/specializations`);
       setSpecializations(response.data);
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des spécialisations :",
-        error
-      );
+      console.error("Erreur lors de la récupération des spécialisations :", error);
     }
   };
 
-  // Afficher le popup avec les spécialisations après avoir cliqué sur "S'inscrire"
-  const handleRegisterClick = (characterId, raidId) => {
-    if (!characterId) {
-      setNotification(
-        "Veuillez sélectionner un personnage avant de vous inscrire."
-      );
-      return;
-    }
-
-    const character = characters.find(
-      char => char.id === parseInt(characterId)
-    ); // Parse l'ID pour être sûr
-    setSelectedCharacterDetails(character);
-    fetchSpecializations(characterId); // Récupérer les spécialisations pour ce personnage
-    setSelectedRaid(raidId); // Stocker l'ID du raid
-    setShowPopup(true); // Ouvrir le popup
+  // Handle the register button click
+  const handleRegisterClick = (raidId) => {
+    setSelectedRaid(raidId); // Set the selected raid
+    setShowPopup(true); // Show the popup
   };
 
   const handleRegister = async () => {
-    if (!selectedSpecialization) {
-      setNotification(
-        "Veuillez sélectionner une spécialisation pour vous inscrire."
-      );
+    if (!selectedSpecialization || !selectedCharacterDetails) {
+      setNotification("Veuillez sélectionner un personnage et une spécialisation.");
       return;
     }
 
     try {
-      const response = await axios.post("/raid/register", {
+      const isRegistered = isUserRegistered(selectedRaid);
+      const url = isRegistered
+        ? `/raid/edit/${selectedRaid}/${selectedCharacterDetails.id}` // Endpoint for edit
+        : "/raid/register"; // Endpoint for registering
+
+      const method = isRegistered ? "put" : "post";
+
+      const response = await axios[method](url, {
         raid_id: selectedRaid,
         character_id: selectedCharacterDetails.id,
-        specialization_id: selectedSpecialization // Envoyer l'ID de la spécialisation
+        specialization_id: selectedSpecialization,
       });
-      setNotification("Inscription réussie au raid !");
-      setShowPopup(false); // Fermer le popup après l'inscription
+
+      setNotification(isRegistered ? "Inscription modifiée avec succès !" : "Inscription réussie au raid !");
+      setShowPopup(false); // Close the popup after registration
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error.response);
       setNotification("Erreur lors de l'inscription.");
     }
   };
 
-  // Fermer le popup en cliquant à l'extérieur
-  const handleOutsideClick = event => {
+  // Handle clicking outside the popup to close it
+  const handleOutsideClick = (event) => {
     if (event.target.classList.contains("popup")) {
       setShowPopup(false);
     }
   };
 
-  // Fonction pour effacer la notification après quelques secondes
-  useEffect(
-    () => {
-      if (notification) {
-        const timer = setTimeout(() => {
-          setNotification("");
-        }, 3000); // Délai de 3 secondes avant de masquer la notification
-        return () => clearTimeout(timer);
-      }
-    },
-    [notification]
-  );
+  // Clear notification after a few seconds
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(""), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification]);
 
   return (
     <div className="raid-list-wrapper">
-      <div className="raid-list-wrapper--overlay" />{" "}
-      {/* Overlay devant l'image */}
+      <div className="raid-list-wrapper--overlay" /> {/* Overlay */}
       <div className="raid-list">
         <div className="raid-list__content">
           <h2 className="raid-list__title">Liste des Raids</h2>
 
           {/* Notification */}
-          {notification &&
-            <div className="notification">
-              {notification}
-            </div>}
+          {notification && <div className="notification">{notification}</div>}
 
-          {/* Sélection du personnage */}
-          <div className="raid-list__character-select">
-            <label htmlFor="characterSelect">
-            </label>
-            <select
-              id="characterSelect"
-              value={selectedCharacter}
-              onChange={e => setSelectedCharacter(e.target.value)}
-            >
-              <option value="">Sélectionnez un personnage</option>
-              {characters.map(character =>
-                <option key={character.id} value={character.id}>
-                  {character.name} - {character.classe.name}
-                </option>
-              )}
-            </select>
-          </div>
+          {/* Raid List */}
+          {raids.length > 0 ? (
+            <ul className="raid-list__items">
+              {raids.map((raid) => (
+                <li className="raid-list__item" key={raid.id}>
+                  <h3 className="raid-list__item-title">{raid.title}</h3>
+                  <p className="raid-list__item-description">{raid.description}</p>
+                  <p className="raid-list__item-date">
+                    <span className="raid-list__item-date--dateformat">
+                      {new Intl.DateTimeFormat("fr-FR", {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                      }).format(new Date(raid.date))}{" "}
+                    </span>
+                    à 21h
+                  </p>
+                  <div className="raid-list__item-links">
+                    <button
+                      onClick={() => handleRegisterClick(raid.id)}
+                      className="raid-list__item-link"
+                    >
+                      {isUserRegistered(raid.id) ? "Modifier mon inscription" : "S'inscrire"}
+                    </button>
+                    <Link to={`/raid/${raid.id}`}>
+                      <button className="raid-list__item-link">Voir les inscrits</button>
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="raid-list__no-raids">Aucun raid disponible pour le moment.</p>
+          )}
 
-          {/* Liste des raids */}
-          {raids.length > 0
-            ? <ul className="raid-list__items">
-                {raids.map(raid =>
-                  <li className="raid-list__item" key={raid.id}>
-                    <h3 className="raid-list__item-title">
-                      {raid.title}
-                    </h3>
-                    <p className="raid-list__item-description">
-                      {raid.description}
-                    </p>
-                    <p className="raid-list__item-date">
-                      <span className="raid-list__item-date--dateformat">
-                        {new Intl.DateTimeFormat("fr-FR", {
-                          weekday: "long", // Jour de la semaine
-                          day: "numeric", // Jour du mois
-                          month: "long"
-                        }).format(new Date(raid.date))} </span>à 21h
-                      
-                    </p>
-                    <div className="raid-list__item-links">
-                      <button
-                        onClick={() =>
-                          handleRegisterClick(selectedCharacter, raid.id)}
-                        className="raid-list__item-link"
-                      >
-                        S'inscrire
-                      </button>
-                      <Link to={`/raid/${raid.id}`}>
-                        <button className="raid-list__item-link">
-                          Voir les inscrits
-                        </button>
-                      </Link>
-                    </div>
-                  </li>
-                )}
-              </ul>
-            : <p className="raid-list__no-raids">
-                Aucun raid disponible pour le moment.
-              </p>}
-
-          {/* Popup de sélection des spécialisations */}
-          {showPopup &&
-            selectedCharacterDetails &&
+          {/* Popup for selecting characters and specialization */}
+          {showPopup && (
             <div className="popup" onClick={handleOutsideClick}>
               <div className="popup__content">
-                <button
-                  className="popup__close-btn"
-                  onClick={() => setShowPopup(false)}
-                >
+                <button className="popup__close-btn" onClick={() => setShowPopup(false)}>
                   <FontAwesomeIcon icon={faTimes} />
                 </button>
-                <h3>
-                  Inscription au raid pour {selectedCharacterDetails.name}
-                </h3>
 
-                <label htmlFor="specializationSelect">Spécialisation :</label>
+                <h3>Inscription au raid</h3>
+
+                {/* Character selection in popup */}
+                <label htmlFor="characterSelectPopup">Personnage :</label>
                 <select
-                  id="specializationSelect"
-                  value={selectedSpecialization}
-                  onChange={e => setSelectedSpecialization(e.target.value)}
+                  id="characterSelectPopup"
+                  value={selectedCharacter}
+                  onChange={(e) => {
+                    setSelectedCharacter(e.target.value);
+                    const character = characters.find((char) => char.id === parseInt(e.target.value));
+                    setSelectedCharacterDetails(character);
+                    fetchSpecializations(e.target.value); // Update specializations
+                  }}
                 >
-                  <option value="">Sélectionnez une spécialisation</option>
-                  {specializations.map(specialization =>
-                    <option key={specialization.id} value={specialization.id}>
-                      {specialization.name}
+                  <option value="">Sélectionnez un personnage</option>
+                  {characters.map((character) => (
+                    <option key={character.id} value={character.id}>
+                      {character.name} - {character.classe.name}
                     </option>
-                  )}
+                  ))}
                 </select>
+
+                {/* Specialization selection */}
+                {selectedCharacterDetails && (
+                  <>
+                    <label htmlFor="specializationSelect">Spécialisation :</label>
+                    <select
+                      id="specializationSelect"
+                      value={selectedSpecialization}
+                      onChange={(e) => setSelectedSpecialization(e.target.value)}
+                    >
+                      <option value="">Sélectionnez une spécialisation</option>
+                      {specializations.map((specialization) => (
+                        <option key={specialization.id} value={specialization.id}>
+                          {specialization.name}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                )}
 
                 <button onClick={handleRegister} className="popup--confirm-btn">
                   Confirmer
                 </button>
               </div>
-            </div>}
+            </div>
+          )}
 
-          {message &&
-            <p className="raid-list__message">
-              {message}
-            </p>}
+          {message && <p className="raid-list__message">{message}</p>}
         </div>
       </div>
     </div>
