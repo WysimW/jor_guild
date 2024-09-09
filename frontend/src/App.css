@@ -120,10 +120,13 @@ h3 {
 
 .character-voleur {
   background-color: #FFF569; /* Voleur */
+  color:#2b2626;
 }
 
 .character-paladin {
   background-color: #F58CBA; /* Paladin */
+    color:#2b2626;
+
 }
 
 .character-chasseur {
@@ -148,6 +151,7 @@ h3 {
 
 .character-prêtre {
   background-color: #FFFFFF; /* Prêtre */
+  color:#2b2626;
 }
 
 .démons {
@@ -156,6 +160,7 @@ h3 {
 
 .character-moine {
   background-color: #00FF96; /* Moine */
+  color:#2b2626;
 }
 
 .character-évocateur {
