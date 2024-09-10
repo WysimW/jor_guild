@@ -43,10 +43,10 @@
 }
 
 .dashboard p {
-  font-family: 'Lora', serif;
+  font-family: var(--font-nav);
+  font-weight: 700;
   font-size: 1.2rem;
   color: #ccc;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   margin-bottom: 30px;
 }
 
@@ -65,7 +65,6 @@
   color: #fff;
   cursor: pointer;
   border-radius: 5px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
   transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 
@@ -81,6 +80,7 @@
 }
 
 .character-form {
+  gap: var(--gap-m);
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
@@ -92,7 +92,6 @@
   .character-form h2 {
     font-family: 'Cinzel Decorative', serif;
     color: #ffd700; /* Couleur or */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
     margin-bottom: 20px;
   }
   
@@ -126,14 +125,13 @@
     color: #fff;
     cursor: pointer;
     border-radius: 5px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
   }
   
   .character-form button:hover {
     background-color: #ffd700; /* Couleur or au survol */
-    box-shadow: 0 0 25px rgba(255, 255, 0, 0.5);
     transform: scale(1.1);
+    color:black;
   }
   
   .character-form p {
@@ -141,10 +139,13 @@
   }
   
   .character-list {
+    position: relative;
     padding: 20px;
+    padding-right: 35px;
     border-radius: 10px;
     margin-bottom: 20px;
     width: 45%;
+    height:315px;
   }
   
   .character-list h3 {
@@ -161,7 +162,6 @@
   .character-list li {
     font-family: 'Lora', serif;
     font-size: 18px;
-    color: #fff;
     padding: 10px 0;
     border-bottom: 1px solid #555;
   }
@@ -169,4 +169,40 @@
   .character-list li:last-child {
     border-bottom: none;
   }
-  
+
+/* Pagination styling */
+.pagination {
+  position: absolute;
+  bottom: 0;
+  left: 48%;
+  transform: translateX(-47%); /* Centrer horizontalement par rapport au parent */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-number {
+  background-color: var(--color-red);
+  color: var(--text-color);
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-number.active {
+  background-color: var(--color-gold);
+  color: black;
+  border-color: #007bff;
+  transform: scale(1.05);
+}
+
+.pagination-number:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+.dashboard .notification {
+  font-weight: 400;
+  color: #ccc;
+}

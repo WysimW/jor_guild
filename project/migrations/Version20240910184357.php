@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240910075429 extends AbstractMigration
+final class Version20240910184357 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,11 +21,13 @@ final class Version20240910075429 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE raid_register ADD status VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE user ADD pseudo VARCHAR(25) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE user DROP pseudo');
         $this->addSql('ALTER TABLE raid_register DROP status');
     }
 }

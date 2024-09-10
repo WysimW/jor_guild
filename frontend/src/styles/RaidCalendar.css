@@ -1,12 +1,17 @@
 /* src/styles/RaidCalendar.css */
+.raid-calendar-container {
+    background-image: url('../../public/images/wow-modern-background.webp'); /* Fond immersif */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+}
 
 .raid-calendar {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre */
+    background-color: rgba(0, 0, 0, 0.671); /* Fond sombre */
     padding: 20px;
-    border-radius: 10px;
     max-width: 900px;
-    margin: 20px auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    margin: 0 auto;
     color: #f4f4f4;
     font-family: 'Lora', serif;
 }
@@ -20,7 +25,7 @@
 
 /* Styles FullCalendar */
 .fc {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.253);
     border-radius: 10px;
 }
 
@@ -41,4 +46,13 @@
 
 .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
 cursor:pointer;
+}
+
+/* Enlever le point devant l'événement */
+.fc .fc-daygrid-event-dot {
+    display: none;
+}
+/* Enlever le point devant l'événement */
+.fc .fc-daygrid-event-dot {
+    display: none;
 }

@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from '../services/axios';
 import '../styles/Dashboard.css'; // Importer le fichier de styles
 
-const CharacterForm = () => {
+const CharacterForm = ({ refreshCharacters }) => {
     const [name, setName] = useState('');
-    const [classeId, setClasseId] = useState(''); // Stocker l'ID de la classe sélectionnée
-    const [classes, setClasses] = useState([]); // Stocker la liste des classes
+    const [classeId, setClasseId] = useState('');
+    const [classes, setClasses] = useState([]);
     const [message, setMessage] = useState('');
 
     // Récupérer la liste des classes depuis l'API
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await axios.get('/classes'); // Remplacer '/roles' par '/classes' pour récupérer les classes
+                const response = await axios.get('/classes');
                 setClasses(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des classes :', error);
@@ -25,11 +25,21 @@ const CharacterForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/character/create', {
+            await axios.post('/character/create', {
                 name: name,
-                classe_id: classeId, // Envoyer l'ID de la classe sélectionnée
+                classe_id: classeId,
             });
             setMessage('Personnage créé avec succès !');
+            refreshCharacters(); // Rafraîchir la liste des personnages après création
+
+            // Réinitialiser le formulaire
+            setName('');
+            setClasseId('');
+
+            // Réinitialiser le message après 3 secondes
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
         } catch (error) {
             console.error('Erreur lors de la création du personnage :', error);
             setMessage('Erreur lors de la création du personnage.');
@@ -57,8 +67,8 @@ const CharacterForm = () => {
                     required
                 >
                     <option value="">Sélectionner une classe</option>
-                    {classes.length > 0 && classes.map((classe, index) => (
-                        <option key={classe.id || index} value={classe.id}>
+                    {classes.length > 0 && classes.map((classe) => (
+                        <option key={classe.id} value={classe.id}>
                             {classe.name}
                         </option>
                     ))}
@@ -66,7 +76,7 @@ const CharacterForm = () => {
 
                 <button type="submit">Créer</button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className="notification">{message}</p>}
         </div>
     );
 };
