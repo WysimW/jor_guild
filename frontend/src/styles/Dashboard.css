@@ -2,7 +2,7 @@
 
 /* Style global du dashboard */
 .dashboard {
-  background-image: url('../../public/images/wow-modern-background.webp'); /* Fond immersif */
+  background-image: url('../../public/images/thewarwithinbg.png'); /* Fond immersif */
   background-size: cover;
   background-position: center;
   position: relative;
@@ -20,7 +20,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Couche sombre devant l'image */
+  background-color: rgba(0, 0, 0, 0.184); /* Couche sombre devant l'image */
   z-index: 1;
 }
 
@@ -38,6 +38,7 @@
   font-size: 3rem;
   color: #ffd700; /* Or */
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  margin: 0;
   margin-bottom: 20px;
 }
 
@@ -74,13 +75,18 @@
   transform: scale(1.1);
 }
 
+.character-tabs-container {
+  display: flex;
+  justify-content: center;
+}
+
 .character-form {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre pour le formulaire */
     padding: 20px;
     border-radius: 10px;
     max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
   }
   
   .character-form h2 {
@@ -135,11 +141,10 @@
   }
   
   .character-list {
-    background-color: rgba(0, 0, 0, 0.7); /* Fond sombre pour la liste des personnages */
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    width: 45%;
   }
   
   .character-list h3 {

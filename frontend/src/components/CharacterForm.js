@@ -38,7 +38,7 @@ const CharacterForm = () => {
 
     return (
         <div className="character-form">
-            <h2>Créer un personnage</h2>
+            <h3>Créer un personnage</h3>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Nom du personnage :</label>
                 <input

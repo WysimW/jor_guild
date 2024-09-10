@@ -1,7 +1,7 @@
 // src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../services/axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom'; // Importer Link et useNavigate
 import '../styles/Auth.css'; // Importer le fichier de styles
 
 const Login = () => {
@@ -9,6 +9,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const location = useLocation(); // Utiliser useLocation pour récupérer l'état
+
+
+  useEffect(() => {
+    if (location.state?.successMessage) {
+        setMessage(location.state.successMessage);
+    }
+}, [location.state]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,27 +32,36 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Connexion</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Email ou Nom d'utilisateur :</label>
-        <input
-          type="text"
-          id="username"
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Mot de passe :</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" className="login-button">Se connecter</button>
-      </form>
-      {message && <p className="login-message">{message}</p>}
+      <div className="auth_overlay"></div> {/* Overlay devant l'image */}
+      <div className="login-wrapper">
+
+        <h2>Connexion</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label htmlFor="username">Email :</label>
+          <input
+            type="text"
+            id="username"
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            required
+          />
+          <label htmlFor="password">Mot de passe :</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit" className="login-button">Se connecter</button>
+        </form>
+        <div className="signup-links">
+                    <Link to="/">Retour à l'accueil</Link>
+                    <Link to="/signup">Pas encore inscrit ?</Link>
+                </div>
+      </div>
+      {message && <p className="notification">{message}</p>}
+
     </div>
   );
 };

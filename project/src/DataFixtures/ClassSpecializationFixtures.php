@@ -17,7 +17,8 @@ use Faker\Factory;
 
 
 class ClassSpecializationFixtures extends Fixture implements DependentFixtureInterface
-{       private UserPasswordHasherInterface $passwordHasher;
+{       
+    private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
@@ -28,74 +29,76 @@ class ClassSpecializationFixtures extends Fixture implements DependentFixtureInt
         // Récupérer les rôles déjà créés
         $tankRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'Tank']);
         $healRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'Heal']);
-        $dpsRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'DPS']);
+        $meleeDpsRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'Melee DPS']);
+        $rangedDpsRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'Ranged DPS']);
+        $supportRole = $manager->getRepository(Role::class)->findOneBy(['name' => 'Support']);
 
         // Liste des classes et leurs spécialisations traduites
         $classesData = [
             'Guerrier' => [
-                ['name' => 'Armes', 'role' => $dpsRole],
-                ['name' => 'Fureur', 'role' => $dpsRole],
+                ['name' => 'Armes', 'role' => $meleeDpsRole],
+                ['name' => 'Fureur', 'role' => $meleeDpsRole],
                 ['name' => 'Protection', 'role' => $tankRole]
             ],
             'Paladin' => [
                 ['name' => 'Sacré', 'role' => $healRole],
                 ['name' => 'Protection', 'role' => $tankRole],
-                ['name' => 'Vindicte', 'role' => $dpsRole]
+                ['name' => 'Vindicte', 'role' => $meleeDpsRole]
             ],
             'Chasseur' => [
-                ['name' => 'Maîtrise des bêtes', 'role' => $dpsRole],
-                ['name' => 'Précision', 'role' => $dpsRole],
-                ['name' => 'Survie', 'role' => $dpsRole]
+                ['name' => 'Maîtrise des bêtes', 'role' => $rangedDpsRole],
+                ['name' => 'Précision', 'role' => $rangedDpsRole],
+                ['name' => 'Survie', 'role' => $meleeDpsRole]
             ],
             'Voleur' => [
-                ['name' => 'Assassinat', 'role' => $dpsRole],
-                ['name' => 'Hors-la-loi', 'role' => $dpsRole],
-                ['name' => 'Finesse', 'role' => $dpsRole]
+                ['name' => 'Assassinat', 'role' => $meleeDpsRole],
+                ['name' => 'Hors-la-loi', 'role' => $meleeDpsRole],
+                ['name' => 'Finesse', 'role' => $meleeDpsRole]
             ],
             'Prêtre' => [
                 ['name' => 'Discipline', 'role' => $healRole],
                 ['name' => 'Sacré', 'role' => $healRole],
-                ['name' => 'Ombre', 'role' => $dpsRole]
+                ['name' => 'Ombre', 'role' => $rangedDpsRole]
             ],
             'Chevalier de la mort' => [
                 ['name' => 'Sang', 'role' => $tankRole],
-                ['name' => 'Givre', 'role' => $dpsRole],
-                ['name' => 'Impie', 'role' => $dpsRole]
+                ['name' => 'Givre', 'role' => $meleeDpsRole],
+                ['name' => 'Impie', 'role' => $meleeDpsRole]
             ],
             'Chaman' => [
-                ['name' => 'Élémentaire', 'role' => $dpsRole],
-                ['name' => 'Amélioration', 'role' => $dpsRole],
+                ['name' => 'Élémentaire', 'role' => $rangedDpsRole],
+                ['name' => 'Amélioration', 'role' => $meleeDpsRole],
                 ['name' => 'Restauration', 'role' => $healRole]
             ],
             'Mage' => [
-                ['name' => 'Arcanes', 'role' => $dpsRole],
-                ['name' => 'Feu', 'role' => $dpsRole],
-                ['name' => 'Givre', 'role' => $dpsRole]
+                ['name' => 'Arcanes', 'role' => $rangedDpsRole],
+                ['name' => 'Feu', 'role' => $rangedDpsRole],
+                ['name' => 'Givre', 'role' => $rangedDpsRole]
             ],
             'Démoniste' => [
-                ['name' => 'Affliction', 'role' => $dpsRole],
-                ['name' => 'Démonologie', 'role' => $dpsRole],
-                ['name' => 'Destruction', 'role' => $dpsRole]
+                ['name' => 'Affliction', 'role' => $rangedDpsRole],
+                ['name' => 'Démonologie', 'role' => $rangedDpsRole],
+                ['name' => 'Destruction', 'role' => $rangedDpsRole]
             ],
             'Moine' => [
                 ['name' => 'Maître brasseur', 'role' => $tankRole],
                 ['name' => 'Tisse-brume', 'role' => $healRole],
-                ['name' => 'Marche-vent', 'role' => $dpsRole]
+                ['name' => 'Marche-vent', 'role' => $meleeDpsRole]
             ],
             'Druide' => [
-                ['name' => 'Équilibre', 'role' => $dpsRole],
-                ['name' => 'Farouche', 'role' => $dpsRole],
+                ['name' => 'Équilibre', 'role' => $rangedDpsRole],
+                ['name' => 'Farouche', 'role' => $meleeDpsRole],
                 ['name' => 'Gardien', 'role' => $tankRole],
                 ['name' => 'Restauration', 'role' => $healRole]
             ],
             'Chasseur de démons' => [
-                ['name' => 'Dévastation', 'role' => $dpsRole],
+                ['name' => 'Dévastation', 'role' => $meleeDpsRole],
                 ['name' => 'Vengeance', 'role' => $tankRole]
             ],
             'Évocateur' => [
-                ['name' => 'Dévastation', 'role' => $dpsRole],
+                ['name' => 'Dévastation', 'role' => $rangedDpsRole],
                 ['name' => 'Préservation', 'role' => $healRole],
-                ['name' => 'Augmentation', 'role' => $dpsRole]
+                ['name' => 'Augmentation', 'role' => $supportRole]
             ],
         ];
 
@@ -161,6 +164,7 @@ class ClassSpecializationFixtures extends Fixture implements DependentFixtureInt
                 $raidRegister = new RaidRegister();
                 $raidRegister->setRaid($raid);
                 $raidRegister->setRegistredCharacter($character);
+                $raidRegister->setStatus('Présent');
                 $raidRegister->setRegisteredDate(new \DateTime());
                 $raidRegister->addRegistredSpecialization($randomSpecialization);
 

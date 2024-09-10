@@ -35,6 +35,10 @@ class RaidRegister
     #[ORM\ManyToMany(targetEntity: Specialization::class, inversedBy: 'raidRegisters')]
     private Collection $registredSpecialization;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
+    private ?string $status = null;
+
     public function __construct()
     {
         $this->registredSpecialization = new ArrayCollection();
@@ -101,6 +105,18 @@ class RaidRegister
     public function removeRegistredSpecialization(Specialization $registredSpecialization): static
     {
         $this->registredSpecialization->removeElement($registredSpecialization);
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

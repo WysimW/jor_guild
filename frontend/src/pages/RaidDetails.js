@@ -20,8 +20,21 @@ const RaidDetails = () => {
     const [notification, setNotification] = useState(""); // Gérer les notifications
     const [isRegistered, setIsRegistered] = useState(false); // Pour suivre si un personnage est déjà inscrit
     const [userRegistration, setUserRegistration] = useState(null); // Stocker l'inscription de l'utilisateur
+    const [raidDetailsAbsent, setRaidDetailsAbsent] = useState(null);
+    const [selectedStatus, setSelectedStatus] = useState(""); // Stocker le statut sélectionné
 
 
+    const slugify = (text) => {
+        return text
+            .toString()                                    // Convertir en chaîne
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
+            .toLowerCase()                                 // Tout en minuscules
+            .trim()                                        // Supprimer les espaces en début et fin
+            .replace(/\s+/g, '-')                          // Remplacer les espaces par des tirets
+            .replace(/[^\w\-]+/g, '')                      // Supprimer les caractères non-alphanumériques
+            .replace(/\-\-+/g, '-');                       // Remplacer les doubles tirets par un seul
+    };
+    
     // Fetch user's characters
     useEffect(() => {
         const fetchCharacters = async () => {
@@ -59,18 +72,19 @@ const RaidDetails = () => {
             setNotification('Veuillez sélectionner une spécialisation pour vous inscrire.');
             return;
         }
-    
+
         try {
             const requestData = {
                 raid_id: id, // Utiliser l'ID du raid depuis l'URL
                 character_id: selectedCharacterDetails.id,
                 specialization_id: selectedSpecialization, // Envoyer l'ID de la spécialisation
+                status: selectedStatus, // Ajouter le statut ici
             };
-    
+
             const response = isRegistered
                 ? await axios.put(`/raid/register/${userRegistration.id}`, requestData) // Modifier l'inscription
                 : await axios.post('/raid/register', requestData); // Nouvelle inscription
-    
+
             setNotification(isRegistered ? 'Inscription modifiée avec succès !' : 'Inscription réussie au raid !');
             setShowRegisterPopup(false); // Fermer le popup après l'inscription
         } catch (error) {
@@ -78,7 +92,9 @@ const RaidDetails = () => {
             setNotification('Erreur lors de l\'inscription.');
         }
     };
-    
+
+
+
 
     // Gérer la disparition des notifications après quelques secondes
     useEffect(() => {
@@ -99,6 +115,19 @@ const RaidDetails = () => {
             }
         };
         fetchRaidDetails();
+    }, [id]); // Toujours appelé lors du rendu si l'ID change
+
+    // Fetch raid details
+    useEffect(() => {
+        const fetchRaidDetailsAbsent = async () => {
+            try {
+                const response = await axios.get(`/raid/${id}/details/absent`); // Récupérer les détails du raid depuis l'API
+                setRaidDetailsAbsent(response.data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des détails du raid:', error);
+            }
+        };
+        fetchRaidDetailsAbsent();
     }, [id]); // Toujours appelé lors du rendu si l'ID change
 
     // Initialiser tippy.js après le rendu des éléments de personnage
@@ -139,10 +168,17 @@ const RaidDetails = () => {
             if (userRegistered) {
                 setIsRegistered(true);
                 setUserRegistration(userRegistered); // Stocker les détails de l'inscription de l'utilisateur
-            }
+            } else if (raidDetailsAbsent) {
+                const userCharacterIds = characters.map(character => character.id);
+                const userRegistered = raidDetailsAbsent.inscriptions.find(inscription =>
+                    userCharacterIds.includes(inscription.registredCharacter.id)
+                ); if (userRegistered) {
+                    setIsRegistered(true);
+                    setUserRegistration(userRegistered); // Stocker les détails de l'inscription de l'utilisateur
+                }
+        } 
         }
     }, [raidDetails, characters]);
-    
 
     if (!raidDetails) {
         return <p>Chargement des détails du raid...</p>;
@@ -151,10 +187,12 @@ const RaidDetails = () => {
 
     // Définir les priorités de rôle
     const rolePriority = {
-        Tank: 1,
-        Heal: 2,
-        DPS: 3,
-        'Aucun rôle': 4 // Pour les cas sans rôle attribué
+        'Tank': 1,
+        'Heal': 2,
+        'Melee DPS': 4,
+        'Ranged DPS': 5,
+        'Support': 3,
+        'Aucun rôle': 6 // Pour les cas sans rôle attribué
     };
 
     // Mapping des buffs selon les classes et spécialisations
@@ -174,7 +212,7 @@ const RaidDetails = () => {
         'Battle Rez': ['Druide', 'Paladin', 'Chevalier de la mort', 'Démoniste'],
         'Skyfury Totem': ['Chaman'],
         'Burst of Movespeed': ['Chaman', 'Druide'],
-        'Mass Dispel': ['Prêtre', 'Moine'],
+        'Mass Dispel': ['Prêtre'],
         'AoE Damage Reduction': ['Guerrier', 'Chasseur de démons', 'Chevalier de la mort', 'Évocateur'],
         Immunity: ['Mage', 'Paladin', 'Chasseur', 'Voleur'],
     };
@@ -243,12 +281,14 @@ const RaidDetails = () => {
     };
 
 
+
+
     // Classer les rôles selon leur priorité (Tank > Heal > DPS)
     const sortedRoles = Object.keys(sortedByRole).sort((a, b) => rolePriority[a] - rolePriority[b]);
 
     return (
         <div className="raid-details-container">
-            <div className="overlay"></div> {/* Overlay devant l'image */}
+            <div className="raid-details_overlay"></div> {/* Overlay devant l'image */}
             {/* Notification */}
             {notification &&
                 <div className="notification">
@@ -284,7 +324,7 @@ const RaidDetails = () => {
                                 {sortedByRole[role].map(({ character, specialization }) => (
                                     <li
                                         key={character.id}
-                                        className={`character-badge character-${character.classe.name.toLowerCase()}`}
+                                        className={`character-badge character-${slugify(character.classe.name)}`}
                                         data-tippy-content={`Classe: ${character.classe.name}, Spécialisation: ${specialization}`} // Utiliser l'attribut data-tippy-content pour afficher la classe et la spécialisation
                                     >
                                         <span className="character-badge__name">
@@ -295,8 +335,24 @@ const RaidDetails = () => {
                             </ul>
                         </div>
                     ))}
-                </div>
+                    <div className="raid-details-absent-container">
 
+
+
+                    </div>
+
+                </div>
+                <h3 className="raid-details__subheading">Absents & Incertains</h3>
+                <ul className="raid-details__list">
+                    {raidDetailsAbsent.inscriptions.map((inscription) => (
+                        <li key={inscription.id} className="raid-details__item">
+                            <span className="character-name">
+                                {inscription.registredCharacter.name}
+                            </span>{" - "}
+                            {inscription.status}
+                        </li>
+                    ))}
+                </ul>
                 {/* Bouton pour afficher le popup des buffs */}
                 <div className='raid-details__buttons'>
                     <button className="raid-details__buffs-button" onClick={() => setShowBuffs(true)}>
@@ -419,7 +475,18 @@ const RaidDetails = () => {
                                 </select>
                             </>
                         )}
-
+                        {/* Status selection */}
+                        <label htmlFor="statusSelect">Statut :</label>
+                        <select
+                            id="statusSelect"
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                        >
+                            <option value="">Sélectionnez un statut</option>
+                            <option value="Présent">Présent</option>
+                            <option value="Absent">Absent</option>
+                            <option value="Incertain">Incertain</option>
+                        </select>
                         {/* Bouton de confirmation */}
                         <button onClick={handleRegister} className="popup--confirm-btn">
                             Confirmer

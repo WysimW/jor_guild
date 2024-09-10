@@ -16,7 +16,7 @@
 }
 
 .popup-buffs__content {
-    background-color: var(--background-color);
+    background-color: var(--popup-background-color);
     padding: 20px;
     border-radius: 10px;
     max-width: 650px;
@@ -60,16 +60,13 @@
 }
 
 
-.buff-active {
-    color: var(--rarity-uncommon-color);
-}
 
 .buff-inactive {
     color: var(--rarity-poor-color);;
 }
 
 .buff-active, .utility-active {
-    color: green;
+    color: #54ae24ff;
 }
 
 .buff-inactive, .utility-inactive {

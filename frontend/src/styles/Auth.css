@@ -2,15 +2,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
 
 .signup-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  color: var(--text-color);
+  background-image: url('../../public/images/thewarwithinbg.png'); /* Fond immersif */
+  background-size: cover;
+  background-position: center;
+}
+
+.auth_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.234); /* Couche sombre */
+  z-index: 1;
+}
+
+.signup-wrapper {
+  padding: 10px 20px 20px;
+  border-radius: 5px;
+  z-index: 2;
 }
 
 .signup-container h2 {
+  margin: 10px 0;
   font-family: 'Cinzel Decorative', serif;
   font-size: 2.5rem;
   color: #ffd700;
@@ -24,10 +44,10 @@
 }
 
 .signup-form label {
-  font-family: 'Lora', serif;
+  font-family: var(--font-nav);
   margin-bottom: 10px;
   font-size: 1.2rem;
-  color: #ccc;
+  color: var(--text-color);
 }
 
 .signup-form input {
@@ -36,6 +56,7 @@
   font-size: 1.1rem;
   border: 1px solid #444;
   border-radius: 5px;
+  background-color: #1c1c1c;
   color: var(--text-color);
   transition: border-color 0.3s;
 }
@@ -60,6 +81,7 @@
 .signup-button:hover {
   background-color: #ffd700; /* Or au survol */
   transform: scale(1.05);
+  color:black;
 }
 
 .signup-message {
@@ -74,9 +96,19 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-image: url('../../public/images/thewarwithinbg.png'); /* Fond immersif */
+    background-size: cover;
+    background-position: center;
     background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
     color: var(--text-color);
   }
+
+  .login-wrapper {
+    padding: 10px 20px 20px;
+    border-radius: 5px;
+    z-index: 2;
+  }
+  
   
   .login-container h2 {
     font-family: 'Cinzel Decorative', serif;
@@ -136,3 +168,21 @@
     font-size: 1rem;
     color: #ffd700;
   }
+
+  .signup-links {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3px;
+}
+
+.signup-links a {
+  text-align: center;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.signup-links a:hover {
+    text-decoration: underline;
+}

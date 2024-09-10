@@ -16,6 +16,7 @@ const RaidList = () => {
   const [showPopup, setShowPopup] = useState(false); // Gérer l'état du popup d'inscription
   const [notification, setNotification] = useState(""); // Gérer les notifications
   const [selectedRaid, setSelectedRaid] = useState(null); // Stocker l'ID du raid sélectionné
+  const [selectedStatus, setSelectedStatus] = useState(""); // Stocker le statut sélectionné
 
   const isUserRegistered = (raidId) => {
     return raids.some(
@@ -68,32 +69,34 @@ const RaidList = () => {
   };
 
   const handleRegister = async () => {
-    if (!selectedSpecialization || !selectedCharacterDetails) {
-      setNotification("Veuillez sélectionner un personnage et une spécialisation.");
+    if (!selectedSpecialization || !selectedCharacterDetails || !selectedStatus) {
+      setNotification("Veuillez sélectionner un personnage, une spécialisation et un statut.");
       return;
     }
-
+  
     try {
       const isRegistered = isUserRegistered(selectedRaid);
       const url = isRegistered
         ? `/raid/edit/${selectedRaid}/${selectedCharacterDetails.id}` // Endpoint for edit
         : "/raid/register"; // Endpoint for registering
-
+  
       const method = isRegistered ? "put" : "post";
-
+  
       const response = await axios[method](url, {
         raid_id: selectedRaid,
         character_id: selectedCharacterDetails.id,
         specialization_id: selectedSpecialization,
+        status: selectedStatus, // Ajouter le statut ici
       });
-
+  
       setNotification(isRegistered ? "Inscription modifiée avec succès !" : "Inscription réussie au raid !");
-      setShowPopup(false); // Close the popup after registration
+      setShowPopup(false); // Fermer le popup après l'inscription
     } catch (error) {
       console.error("Erreur lors de l'inscription :", error.response);
       setNotification("Erreur lors de l'inscription.");
     }
   };
+  
 
   // Handle clicking outside the popup to close it
   const handleOutsideClick = (event) => {
@@ -202,7 +205,20 @@ const RaidList = () => {
                       ))}
                     </select>
                   </>
+                  
                 )}
+{/* Status selection */}
+<label htmlFor="statusSelect">Statut :</label>
+<select
+  id="statusSelect"
+  value={selectedStatus}
+  onChange={(e) => setSelectedStatus(e.target.value)}
+>
+  <option value="">Sélectionnez un statut</option>
+  <option value="Présent">Présent</option>
+  <option value="Absent">Absent</option>
+  <option value="Incertain">Incertain</option>
+</select>
 
                 <button onClick={handleRegister} className="popup--confirm-btn">
                   Confirmer

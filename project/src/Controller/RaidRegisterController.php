@@ -49,6 +49,7 @@ class RaidRegisterController extends AbstractController
         $raidRegister = new RaidRegister();
         $raidRegister->setRaid($raid);
         $raidRegister->setRegistredCharacter($character);
+        $raidRegister->setStatus($data['status']);
         $raidRegister->addRegistredSpecialization($specialization);
         $raidRegister->setRegisteredDate(new \DateTime()); // Ajouter la date d'inscription
 
@@ -59,6 +60,7 @@ class RaidRegisterController extends AbstractController
 
         return new JsonResponse(['message' => 'Inscription réussie.'], 201);
     }
+
     #[Route('/api/raid/register/{id}', name: 'raid_register_edit', methods: ['PUT'])]
     public function editRaidRegistration(int $id, Request $request, EntityManagerInterface $em): JsonResponse
     {
@@ -102,6 +104,7 @@ class RaidRegisterController extends AbstractController
         // Mettre à jour l'inscription au raid
         $raidRegister->setRaid($raid);
         $raidRegister->setRegistredCharacter($character);
+        $raidRegister->setStatus($data['status']);
         $raidRegister->getRegistredSpecialization()->clear(); // Supprimer les spécialisations actuelles
         $raidRegister->addRegistredSpecialization($specialization);
         $raidRegister->setRegisteredDate(new \DateTime()); // Mettre à jour la date d'inscription
@@ -146,6 +149,7 @@ public function editRaidRegistrationforList(int $raidId, int $characterId, Reque
     $raidRegister->getRegistredSpecialization()->clear(); // Supprimer les spécialisations actuelles
     $raidRegister->addRegistredSpecialization($specialization);
     $raidRegister->setRegisteredDate(new \DateTime()); // Mettre à jour la date d'inscription
+    $raidRegister->setStatus($data['status']);
 
     // Sauvegarder les modifications
     $em->flush();

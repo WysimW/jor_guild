@@ -31,6 +31,8 @@ class AuthController extends AbstractController
         // Créer un nouvel utilisateur
         $user = new User();
         $user->setEmail($data['email']);
+        $user->setPseudo($data['pseudo']);
+
         
         // Encodage du mot de passe avec UserPasswordHasherInterface
         $encodedPassword = $passwordHasher->hashPassword($user, $data['password']);

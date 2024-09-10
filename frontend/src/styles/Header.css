@@ -2,10 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 40px;
+  padding: 35px 40px;
   background-color: var(--navbar-background-color);
   color: var(--text-color);
   position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
 }
 
 .logo {

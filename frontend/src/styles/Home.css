@@ -15,7 +15,7 @@
 }
 
 /* Overlay sombre pour renforcer l'aspect mystérieux */
-.overlay {
+.home-overlay {
     position: absolute;
     top: 0;
     left: 0;

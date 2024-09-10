@@ -27,8 +27,9 @@
 
 
 :root {
-  --navbar-background-color: rgb(32, 29, 29);
-  --background-color: #170e09;
+  --navbar-background-color:#1e042f;
+  --background-color: #1e042f;;
+  --popup-background-color: rgba(0, 0, 0, 0.855);
   --text-color: #f4f4f4;
   --text-color-negative: #161111;
   --title-color: #ffd700;
@@ -36,7 +37,7 @@
   --button-hover-color: #ffcc00;
   --link-hover-color: #ffcc00;
   --link-hover-bg: rgba(255, 204, 0, 0.8); /* Couleur de fond au hover */
-  --background-dark: rgba(0, 0, 0, 0.555);
+  --background-dark: rgba(0, 0, 0, 0.707);
   --background-light: rgba(255, 255, 255, 0.1);
   --color-gold: #ffd700;
   --color-red: #b22222;
@@ -44,17 +45,11 @@
   --text-color-light: #f4f4f4;
   --text-color-gray: #ccc;
 
-  --rarity-poor-color: #9d9d9d;
-  --rarity-uncommon-color: #1eff00;
-  --rarity-rare-color: rgb(0,112,221);
-  --rarity-epic-color: rgb(163,53,238);
-  --rarity-legendary-color: #ff8000;
-  --rarity-artifact-color: #e6cc80	;
 
   --shadow-color: rgba(0, 0, 0, 0.1);
   --hover-shadow-color: rgba(0, 0, 0, 0.2);
   --section-bg-color: rgba(0, 0, 0, 0.5);
-  --overlay-color: rgba(0, 0, 0, 0.6);
+  --overlay-color: rgba(38, 0, 35, 0.498);
   --border-radius: 10px;
 
   --font-size-xxl: 4rem;
@@ -73,6 +68,8 @@
   --margin-s: 10px;
 
   --gap-nav: 40px;
+  --gap-m: 20px;
+  --gap-l: 40px;
   --space-xs: 5px;
   --space-s: 10px;
   --space-m: 20px;
@@ -83,12 +80,10 @@
   --font-text: 'Lora', serif;
   --font-nav: 'Merriweather', serif; /* Nouvelle police serif pour le menu */
   --font-sans-serif: 'CanalRomain'; /* Nouvelle police serif pour le menu */
-
-
 }
 
 body {
-  background-color: var(--background-color);
+  background-color: var(--navbar-background-color);
 }
 
 ::-webkit-scrollbar {
@@ -107,64 +102,6 @@ body {
 
 h3 {
   margin: 0;
-}
-
-/* Couleurs des badges selon la classe */
-.character-guerrier {
-  background-color: #C79C6E; /* Guerrier */
-}
-
-.character-mage {
-  background-color: #69CCF0; /* Mage */
-}
-
-.character-voleur {
-  background-color: #FFF569; /* Voleur */
-  color:#2b2626;
-}
-
-.character-paladin {
-  background-color: #F58CBA; /* Paladin */
-    color:#2b2626;
-
-}
-
-.character-chasseur {
-  background-color: #ABD473; /* Chasseur */
-}
-
-.character-démoniste {
-  background-color: #9482C9; /* Démoniste */
-}
-
-.character-druide {
-  background-color: #FF7D0A; /* Druide */
-}
-
-.character-chevalier {
-  background-color: #C41F3B; /* Chevalier de la mort */
-}
-
-.character-chaman {
-  background-color: #0070DE; /* Chaman */
-}
-
-.character-prêtre {
-  background-color: #FFFFFF; /* Prêtre */
-  color:#2b2626;
-}
-
-.démons {
-  background-color: #A330C9 !important; /* Chasseur de démons */
-}
-
-.character-moine {
-  background-color: #00FF96; /* Moine */
-  color:#2b2626;
-}
-
-.character-évocateur {
-  background-color: #33937F; /* Evoker */
 }
 
 ul {

@@ -18,15 +18,15 @@ class RaidController extends AbstractController
     public function browse(EntityManagerInterface $em): JsonResponse
     {
         $raids = $em->getRepository(Raid::class)->findAll();
-    
+
         // Préparer les données avec les personnages inscrits
         $raidsData = [];
-    
+
         foreach ($raids as $raid) {
             $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
-    
+
             $registeredCharacters = [];
-    
+
             foreach ($inscriptions as $inscription) {
                 $character = $inscription->getRegistredCharacter();
                 $registeredCharacters[] = [
@@ -38,7 +38,7 @@ class RaidController extends AbstractController
                     ]
                 ];
             }
-    
+
             $raidsData[] = [
                 'id' => $raid->getId(),
                 'title' => $raid->getTitle(),
@@ -47,10 +47,10 @@ class RaidController extends AbstractController
                 'registeredCharacters' => $registeredCharacters, // Inclure les personnages inscrits
             ];
         }
-    
+
         return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
-    
+
 
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
     public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
@@ -60,15 +60,21 @@ class RaidController extends AbstractController
         if (!$raid) {
             return new JsonResponse(['error' => 'Raid non trouvé'], 404);
         }
-    
-        // Récupérer les inscriptions au raid
-        $inscriptions = $em->getRepository(RaidRegister::class)->findBy(['raid' => $raid]);
-    
+
+        $presentStatus = 'Présent'; // Le statut que vous souhaitez filtrer
+
+        // Récupérer uniquement les inscriptions pour le raid avec le statut 'Présent'
+        $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
+            'raid' => $raid,
+            'status' => $presentStatus
+        ]);
+
+
         // Préparer un tableau contenant les informations complètes sur les inscriptions
         $inscriptionsData = [];
         foreach ($inscriptions as $inscription) {
             $character = $inscription->getRegistredCharacter();
-            
+
             // Gérer les spécialisations liées à l'inscription (ManyToMany)
             $specializationsData = [];
             foreach ($inscription->getRegistredSpecialization() as $specialization) {
@@ -78,10 +84,11 @@ class RaidController extends AbstractController
                     'role' => $specialization->getSpeRole(),
                 ];
             }
-    
+
             // Ajouter les données de l'inscription à l'ensemble
             $inscriptionsData[] = [
                 'id' => $inscription->getId(),
+                'status' => $inscription->getStatus(),
                 'registredCharacter' => [
                     'id' => $character->getId(),
                     'name' => $character->getName(),
@@ -94,7 +101,67 @@ class RaidController extends AbstractController
                 'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
             ];
         }
-    
+
+        // Renvoyer les détails du raid avec les inscriptions complètes
+        return $this->json([
+            'title' => $raid->getTitle(),
+            'description' => $raid->getDescription(),
+            'mode' => $raid->getMode(),
+            'date' => $raid->getDate()->format(\DateTime::ATOM), // Envoyer la date brute au format ISO 8601
+            'inscriptions' => $inscriptionsData,
+        ], 200, [], ['groups' => 'raid:read']);
+    }
+
+    #[Route('/api/raid/{id}/details/absent', name: 'raid_details_absent', methods: ['GET'])]
+    public function raidAbsents(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        // Récupérer le raid par son ID
+        $raid = $em->getRepository(Raid::class)->find($id);
+        if (!$raid) {
+            return new JsonResponse(['error' => 'Raid non trouvé'], 404);
+        }
+
+        $presentStatus = ['Absent','Incertain']; // Le statut que vous souhaitez filtrer
+
+        // Récupérer uniquement les inscriptions pour le raid avec le statut 'Présent'
+        $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
+            'raid' => $raid,
+            'status' => $presentStatus
+        ]);
+
+
+        // Préparer un tableau contenant les informations complètes sur les inscriptions
+        $inscriptionsData = [];
+        foreach ($inscriptions as $inscription) {
+            $character = $inscription->getRegistredCharacter();
+
+            // Gérer les spécialisations liées à l'inscription (ManyToMany)
+            $specializationsData = [];
+            foreach ($inscription->getRegistredSpecialization() as $specialization) {
+                $specializationsData[] = [
+                    'id' => $specialization->getId(),
+                    'name' => $specialization->getName(),
+                    'role' => $specialization->getSpeRole(),
+                ];
+            }
+
+            // Ajouter les données de l'inscription à l'ensemble
+            $inscriptionsData[] = [
+                'id' => $inscription->getId(),
+                'status' => $inscription->getStatus(),
+                'registredCharacter' => [
+                    'id' => $character->getId(),
+                    'name' => $character->getName(),
+                    'classe' => [
+                        'id' => $character->getClasse()->getId(),
+                        'name' => $character->getClasse()->getName(),
+                    ],
+                    'specializations' => $specializationsData, // Ajout des spécialisations
+                ],
+                'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
+            ];
+        }
+
         // Renvoyer les détails du raid avec les inscriptions complètes
         return $this->json([
             'title' => $raid->getTitle(),

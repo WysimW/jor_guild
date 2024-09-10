@@ -11,13 +11,13 @@
     padding: var(--padding-m);
 }
 
-.overlay {
+.raid-details_overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.247); /* Couche sombre */
+    background-color: rgba(0, 0, 0, 0.0); /* Couche sombre */
     z-index: 1;
 }
 
@@ -72,16 +72,28 @@
 
 /* Grid pour les rôles */
 .raid-details__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Trois colonnes pour Tank, Heal, DPS */
+    display: flex;
+    flex-wrap: wrap;
     gap: var(--gap-m);
+    justify-content: space-between;
     width: 100%;
-    justify-items: center;
 }
 
-.raid-details__role-column {
-    text-align: center;
+.raid-details__grid > div {
+    flex: 1 1 calc(33.33% - var(--gap-m)); /* 3 colonnes */
+    max-width: calc(33.33% - var(--gap-m));
 }
+
+.raid-details__grid > div:nth-child(n+4) {
+    flex: 1 1 calc(50% - var(--gap-l)); /* 2 colonnes sur la deuxième ligne */
+    max-width: calc(50% - var(--gap-l));
+}
+
+.raid-details__grid > div:nth-child(n+4) ul {
+    justify-content: start;
+}
+
+
 
 .raid-details__role-title {
     font-family: 'Cinzel', serif;
@@ -109,6 +121,7 @@
 
 .raid-details__role-column ul {
 display: flex;
+justify-content: start;
 gap: var(--space-s);
 flex-wrap: wrap;
 }
@@ -157,3 +170,4 @@ color: black;
 .raid-details__buffs-button:hover, .raid-details__tokens-button:hover, .raid-details__register-button:hover {
     background-color: var(--button-hover-color);
 }
+

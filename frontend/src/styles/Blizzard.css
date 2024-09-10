@@ -1,0 +1,82 @@
+:root {
+  --rarity-poor-color: #9d9d9d;
+  --rarity-uncommon-color: #1eff00;
+  --rarity-rare-color: rgb(0, 112, 221);
+  --rarity-epic-color: rgb(163, 53, 238);
+  --rarity-legendary-color: #ff8000;
+  --rarity-artifact-color: #e6cc80;
+
+  --class-color-warrior: #c79c6e;
+  --class-color-warrior-alpha: rgba(199, 156, 110, 0.7);
+  --class-color-warrior-border: #634e37;
+
+  --class-color-mage: #69ccf0;
+
+  --class-color-rogue: #fff569;
+
+  --class-color-warrior: #c79c6e;
+
+  --class-color-warrior: #c79c6e;
+
+  --class-color-warrior: #c79c6e;
+
+  --class-color-warrior: #c79c6e;
+
+  --class-color-warrior: #c79c6e;
+
+  --class-color-warrior: #c79c6e;
+}
+
+/* Couleurs des badges selon la classe */
+.character-guerrier {
+  background-color: var(--class-color-warrior); /* Guerrier */
+}
+
+.character-mage {
+  background-color: var(--class-color-mage);/* Mage */
+}
+
+.character-voleur {
+  background-color: var(--class-color-rogue);/* Voleur */
+}
+
+.character-paladin {
+  background-color: #f58cba; /* Paladin */
+}
+
+.character-chasseur {
+  background-color: #abd473; /* Chasseur */
+}
+
+.character-demoniste {
+  background-color: #9482c9; /* Démoniste */
+}
+
+.character-druide {
+  background-color: #ff7d0a; /* Druide */
+}
+
+.character-chevalier-de-la-mort {
+  background-color: #c41f3b; /* Chevalier de la mort */
+}
+
+.character-chaman {
+  background-color: #0070de; /* Chaman */
+}
+
+.character-pretre {
+  background-color: #ffffff; /* Prêtre */
+}
+
+.character-chasseur-de-demons {
+  background-color: #a330c9 ; /* Chasseur de démons */
+}
+
+.character-moine {
+  background-color: #00ff96; /* Moine */
+  color: #2b2626;
+}
+
+.character-evocateur {
+  background-color: #33937f; /* Evoker */
+}
