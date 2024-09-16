@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
-import CharacterForm from './CharacterForm';
-import CharacterList from './CharacterList';
-import Profession from './Profession';
-import Tabs from '../Features/Tabs';
-import { UserContext } from '../../contexts/UserContext'; // Importer le contexte utilisateur
-import axios from '../../services/axios';
+import CharacterForm from 'components/Dashboard/CharacterForm';
+import CharacterList from 'components/Dashboard/CharacterList';
+import Profession from 'components/Dashboard/Profession';
+import Tabs from 'components/Tabs/Tabs';
+import { UserContext } from 'contexts/UserContext'; // Importer le contexte utilisateur
+import axios from 'services/axios';
 import './Dashboard.css'; // Importer le fichier de styles
 
 const Dashboard = () => {

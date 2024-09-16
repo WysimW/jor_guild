@@ -3,7 +3,6 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Importer les styles de tippy.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'; // Icône de suppression
-import './Dashboard.css'; // Importer le fichier de styles
 import axios from '../../services/axios';
 
 const CharacterList = ({ characters, refreshCharacters }) => {

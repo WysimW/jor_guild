@@ -199,7 +199,10 @@ class Raid
     public function removeDownBoss(Boss $downBoss): static
     {
         $this->downBosses->removeElement($downBoss);
-
+        return $this;
+    }
+    
+    
     public function isArchived(): ?bool
     {
         return $this->isArchived;

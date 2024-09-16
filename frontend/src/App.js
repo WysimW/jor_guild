@@ -4,11 +4,11 @@ import { useAuth } from './hooks/useAuth';
 import './App.css';  // Import the reset CSS first
 import './styles/Blizzard.css';  // Import the reset CSS first
 import Home from './pages/Home';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'; // Une page pour l'utilisateur connecté
+import SignUp from 'pages/Auth/SignUp';
+import Login from 'pages/Auth/Login';
+import Dashboard from 'pages/Dashboard/Dashboard'; // Une page pour l'utilisateur connecté
 import Header from './components/Header/Header';
-import Footer from './components/Footer';
+import Footer from 'components/Footer/Footer';
 
 import RaidList from './pages/RaidList'; // Page pour afficher la liste des raids
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
