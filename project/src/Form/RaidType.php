@@ -17,7 +17,7 @@ class RaidType extends AbstractType
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
-            ->add('capacity')
+            ->add('mode')
         ;
     }
 

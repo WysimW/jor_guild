@@ -30,6 +30,7 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $raid->setArchived(false);
             $em->persist($raid);
             $em->flush();
 

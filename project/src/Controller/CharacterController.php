@@ -7,10 +7,12 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\Classe;
 use App\Entity\Character;
+use App\Entity\RaidRegister;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -83,17 +85,32 @@ class CharacterController extends AbstractController
     }
 
     #[Route('/api/characters/{id}', name: 'delete_character', methods: ['DELETE'])]
-    public function delete(int $id, EntityManagerInterface $em): JsonResponse
+    public function deleteCharacter(int $id, EntityManagerInterface $em, UserInterface $user): JsonResponse
     {
+        // Récupérer le personnage par son ID
         $character = $em->getRepository(Character::class)->find($id);
+
+        // Vérifier si le personnage existe
         if (!$character) {
-            return new JsonResponse(['error' => 'Personnage non trouvé'], 404);
+            return new JsonResponse(['error' => 'Personnage non trouvé.'], 404);
         }
 
+        // Vérifier que l'utilisateur connecté est bien le propriétaire du personnage
+        if ($character->getUser() !== $user) {
+            return new JsonResponse(['error' => 'Vous ne pouvez supprimer que vos propres personnages.'], 403);
+        }
+
+        // Récupérer et supprimer les inscriptions liées au personnage
+        $raidRegisters = $em->getRepository(RaidRegister::class)->findBy(['registredCharacter' => $character]);
+        foreach ($raidRegisters as $register) {
+            $em->remove($register);
+        }
+
+        // Supprimer le personnage
         $em->remove($character);
         $em->flush();
 
-        return new JsonResponse(['message' => 'Personnage supprimé avec succès']);
+        return new JsonResponse(['message' => 'Personnage et ses inscriptions supprimés avec succès.'], 200);
     }
 
     #[Route('/api/character/create', name: 'character_create', methods: ['POST'])]

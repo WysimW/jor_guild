@@ -44,6 +44,9 @@ class Raid
     #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
     private ?string $mode = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isArchived = null;
+
     public function __construct()
     {
         $this->raidRegisters = new ArrayCollection();
@@ -147,6 +150,18 @@ class Raid
     public function setMode(?string $mode): static
     {
         $this->mode = $mode;
+
+        return $this;
+    }
+
+    public function isArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setArchived(?bool $isArchived): static
+    {
+        $this->isArchived = $isArchived;
 
         return $this;
     }

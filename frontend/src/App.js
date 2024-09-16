@@ -4,15 +4,16 @@ import { useAuth } from './hooks/useAuth';
 import './App.css';  // Import the reset CSS first
 import './styles/Blizzard.css';  // Import the reset CSS first
 import Home from './pages/Home';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'; // Une page pour l'utilisateur connecté
-import Header from './components/Header';
-import Footer from './components/Footer';
+import SignUp from './components/Auth/SignUp';
+import Login from './components/Auth/Login';
+import Dashboard from './components/Dashboard/Dashboard'; // Une page pour l'utilisateur connecté
+import Header from './components/Core/Header';
+import Footer from './components/Core/Footer';
 import RaidList from './pages/RaidList'; // Page pour afficher la liste des raids
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
 import RaidCalendar from './pages/RaidCalendar'; // Page pour afficher le calendrier des raids
 import { UserProvider } from './contexts/UserContext';
+import { Helmet } from 'react-helmet';
 
 const App = () => {
     const { token } = useAuth();
