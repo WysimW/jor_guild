@@ -1,0 +1,24 @@
+.raid-history-item {
+    background: #f4f4f4;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.raid-history-item h3 {
+    margin-bottom: 10px;
+}
+
+.raid-history-item p {
+    margin: 5px 0;
+}
+
+.raid-history-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.raid-history-item a:hover {
+    text-decoration: underline;
+}

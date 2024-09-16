@@ -232,4 +232,49 @@ class RaidController extends AbstractController
 
         return new JsonResponse(['message' => 'Raid supprimé avec succès']);
     }
+
+    // src/Controller/RaidController.php
+
+#[Route('/api/raids/history', name: 'raid_history', methods: ['GET'])]
+public function history(EntityManagerInterface $em): JsonResponse
+{
+    // Récupérer les raids archivés
+    // $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
+    $raids = $em->getRepository(Raid::class)->findAll();
+
+    $raidsData = [];
+
+    foreach ($raids as $raid) {
+        $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
+        $registeredCharacters = [];
+        $bossesDown = []; // Boss tombés (tu pourrais avoir une entité séparée pour les boss ou un champ)
+
+        foreach ($inscriptions as $inscription) {
+            $character = $inscription->getRegistredCharacter();
+            $registeredCharacters[] = [
+                'id' => $character->getId(),
+                'name' => $character->getName(),
+                'user' => [
+                    'id' => $character->getUser()->getId(),
+                    'username' => $character->getUser()->getEmail(),
+                ],
+            ];
+        }
+
+        // Préparer les données pour chaque raid
+        $raidsData[] = [
+            'id' => $raid->getId(),
+            'title' => $raid->getTitle(),
+            'description' => $raid->getDescription(),
+            'date' => $raid->getDate(),
+            'bossesDown' => $bossesDown, // Exemple d'ajout des boss tombés
+            'duration' => $raid->getDuration(), // Si tu as un champ durée
+            'logsLink' => $raid->getLogsLink(), // Si tu as un lien vers les logs
+            'registeredCharacters' => $registeredCharacters,
+        ];
+    }
+
+    return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
+}
+
 }

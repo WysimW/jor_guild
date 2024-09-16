@@ -10,23 +10,6 @@
 
 }
 
-.logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.guild-logo {
-  height: 75px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-/* Hover stylisé sur le logo */
-.guild-logo:hover {
-  transform: scale(1.1) rotate(5deg); /* Zoom et légère rotation */
-}
-
 .nav-links {
   display: flex;
   gap: var(--gap-nav);

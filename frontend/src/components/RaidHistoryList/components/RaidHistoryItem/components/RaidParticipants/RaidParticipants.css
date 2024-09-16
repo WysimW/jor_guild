@@ -1,0 +1,12 @@
+.raid-participants {
+    margin-top: 10px;
+}
+
+.raid-participants ul {
+    list-style: none;
+    padding: 0;
+}
+
+.raid-participants li {
+    margin: 5px 0;
+}

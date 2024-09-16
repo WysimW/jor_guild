@@ -7,11 +7,13 @@ import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; // Une page pour l'utilisateur connecté
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import Footer from './components/Footer';
 import RaidList from './pages/RaidList'; // Page pour afficher la liste des raids
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
 import RaidCalendar from './pages/RaidCalendar'; // Page pour afficher le calendrier des raids
+import RaidHistory from './pages/RaidHistory'; // Importer le composant d'historique
+
 import { UserProvider } from './contexts/UserContext';
 
 const App = () => {
@@ -49,6 +51,7 @@ const App = () => {
                         <Route path="/raid/:id" element={<PrivateRoute><RaidDetails /></PrivateRoute>} /> {/* Route vers les détails d'un raid */}
                         <Route path="/raid/calendar" element={<PrivateRoute><RaidCalendar /></PrivateRoute>} /> {/* Route vers le calendrier des raids */}
                         <Route path="/dashboard" element={<PrivateRoute><UserProvider><Dashboard /></UserProvider></PrivateRoute>} /> {/* Route protégée pour le Dashboard */}
+                        <Route path="/raids/history" element={<PrivateRoute><RaidHistory /></PrivateRoute>} />
                     </Routes>
                 </div>
             </Layout>
