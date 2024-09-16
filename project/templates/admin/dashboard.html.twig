@@ -14,7 +14,20 @@
         <nav>
             <ul>
                 <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ path('admin_raid_new') }}">Nouveau Raid</a></li>
+                <li>
+                    Gestion des Raids
+                    <ul>
+                        <li><a href="{{ path('admin_raid_new') }}">Nouveau Raid</a></li>
+                        <li><a href="{{ path('admin_raidtier_new') }}">Nouveau RaidTier</a></li>
+                        <li><a href="{{ path('admin_boss_new') }}">Nouveau Boss</a></li>
+                    </ul>
+                </li>
+                <li>
+                    Gestion des Extensions
+                    <ul>
+                        <li><a href="{{ path('admin_extension_new') }}">Nouvelle Extension</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
