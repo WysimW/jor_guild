@@ -1,24 +1,72 @@
-.raid-history-item {
-    background: #f4f4f4;
-    margin-bottom: 15px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Container pour l'item de la liste de l'historique */
+.raid-history-list__item {
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(15, 15, 15, 0.8); /* Fond sombre */
+    transition: box-shadow 0.3s ease;
 }
 
-.raid-history-item h3 {
-    margin-bottom: 10px;
+.raid-history-list__item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.raid-history-item p {
-    margin: 5px 0;
+/* Header du raid avec le titre et l'icône chevron */
+.raid-history-list__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
 }
 
-.raid-history-item a {
-    color: #007bff;
-    text-decoration: none;
+.raid-history-list__title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--text-color);
 }
 
-.raid-history-item a:hover {
+/* Icone chevron avec animation */
+.raid-history-list__icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.raid-history-list__icon--open {
+    transform: rotate(180deg);
+}
+
+/* Détails du raid avec transition */
+.raid-history-list__details {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.raid-history-list__details--open {
+    max-height: 500px; /* Ajuster la hauteur en fonction du contenu */
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Styles pour les différentes informations du raid */
+.raid-history-list__description,
+.raid-history-list__bosses,
+.raid-history-list__duration,
+.raid-history-list__logs {
+    margin: 10px 0;
+    color: var(--text-color);
+}
+
+.raid-history-list__logs a {
+    color: var(--link-color);
     text-decoration: underline;
+}
+
+.raid-history-list__logs a:hover {
+    color: var(--link-hover-color);
 }

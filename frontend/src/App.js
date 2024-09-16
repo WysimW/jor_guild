@@ -13,11 +13,11 @@ import RaidList from './pages/RaidList'; // Page pour afficher la liste des raid
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
 import RaidCalendar from './pages/RaidCalendar'; // Page pour afficher le calendrier des raids
 import RaidHistory from './pages/RaidHistory'; // Importer le composant d'historique
+import AuthWrapper from './components/AuthWrapper/AuthWrapper'; // Importer AuthWrapper
 
 import { UserProvider } from './contexts/UserContext';
 
 const App = () => {
-    const { token } = useAuth();
 
     // Route privée qui redirige vers /login si l'utilisateur n'est pas connecté
     const PrivateRoute = ({ children }) => {
@@ -43,6 +43,8 @@ const App = () => {
         <Router>
             <Layout>
                 <div className="App">
+                <AuthWrapper>
+
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/signup" element={<SignUp />} />
@@ -53,6 +55,8 @@ const App = () => {
                         <Route path="/dashboard" element={<PrivateRoute><UserProvider><Dashboard /></UserProvider></PrivateRoute>} /> {/* Route protégée pour le Dashboard */}
                         <Route path="/raids/history" element={<PrivateRoute><RaidHistory /></PrivateRoute>} />
                     </Routes>
+                    </AuthWrapper>
+
                 </div>
             </Layout>
         </Router>

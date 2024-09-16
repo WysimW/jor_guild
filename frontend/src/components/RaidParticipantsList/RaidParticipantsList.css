@@ -1,0 +1,51 @@
+.raid-participants-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-m);
+    justify-content: space-between;
+    width: 100%;
+}
+
+.raid-participants-list > div {
+    flex: 1 1 calc(33.33% - var(--gap-m)); /* 3 colonnes */
+    max-width: calc(33.33% - var(--gap-m));
+}
+
+.raid-participants-list > div:nth-child(n+4) {
+    flex: 1 1 calc(50% - var(--gap-l)); /* 2 colonnes sur la deuxième ligne */
+    max-width: calc(50% - var(--gap-l));
+}
+
+.raid-participants-list > div:nth-child(n+4) ul {
+    justify-content: start;
+}
+
+.raid-participants-list__role-column ul {
+    display: flex;
+    justify-content: start;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+}
+
+.raid-participants-list__role-title {
+    font-family: 'Cinzel', serif;
+    color: var(--color-gold);
+    margin-bottom: var(--margin-m);
+}
+
+/* Styles des étiquettes pour les classes des personnages */
+.character-badge {  
+    color:#2b2626;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-bottom: var(--margin-s);
+    cursor: pointer; /* Ajout d'un pointeur pour indiquer qu'il y a une action au survol */
+}
+
+.character-badge__name {
+    font-family: var(--font-sans-serif);
+    font-size: var(--font-size-m);
+    font-weight: 300;
+
+}

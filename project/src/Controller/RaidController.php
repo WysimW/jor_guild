@@ -51,7 +51,6 @@ class RaidController extends AbstractController
         return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
 
-
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
     public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
     {
@@ -121,7 +120,7 @@ class RaidController extends AbstractController
             return new JsonResponse(['error' => 'Raid non trouvé'], 404);
         }
 
-        $presentStatus = ['Absent','Incertain']; // Le statut que vous souhaitez filtrer
+        $presentStatus = ['Absent', 'Incertain']; // Le statut que vous souhaitez filtrer
 
         // Récupérer uniquement les inscriptions pour le raid avec le statut 'Présent'
         $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
@@ -172,16 +171,6 @@ class RaidController extends AbstractController
         ], 200, [], ['groups' => 'raid:read']);
     }
 
-    #[Route('/api/raids/{id}', name: 'read_raid', methods: ['GET'])]
-    public function read(int $id, EntityManagerInterface $em): JsonResponse
-    {
-        $raid = $em->getRepository(Raid::class)->find($id);
-        if (!$raid) {
-            return new JsonResponse(['error' => 'Raid non trouvé'], 404);
-        }
-
-        return $this->json($raid);
-    }
 
     #[Route('/api/raids', name: 'add_raid', methods: ['POST'])]
     public function add(Request $request, EntityManagerInterface $em): JsonResponse
@@ -233,48 +222,66 @@ class RaidController extends AbstractController
         return new JsonResponse(['message' => 'Raid supprimé avec succès']);
     }
 
-    // src/Controller/RaidController.php
+    #[Route('/api/raids/history', name: 'raid_history', methods: ['GET'])]
+    public function history(EntityManagerInterface $em): JsonResponse
+    {
+        // Récupérer les raids archivés (avec isArchived à true)
+        //$raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
+        $raids = $em->getRepository(Raid::class)->findAll();
 
-#[Route('/api/raids/history', name: 'raid_history', methods: ['GET'])]
-public function history(EntityManagerInterface $em): JsonResponse
-{
-    // Récupérer les raids archivés
-    // $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
-    $raids = $em->getRepository(Raid::class)->findAll();
 
-    $raidsData = [];
-
-    foreach ($raids as $raid) {
-        $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
-        $registeredCharacters = [];
-        $bossesDown = []; // Boss tombés (tu pourrais avoir une entité séparée pour les boss ou un champ)
-
-        foreach ($inscriptions as $inscription) {
-            $character = $inscription->getRegistredCharacter();
-            $registeredCharacters[] = [
-                'id' => $character->getId(),
-                'name' => $character->getName(),
-                'user' => [
-                    'id' => $character->getUser()->getId(),
-                    'username' => $character->getUser()->getEmail(),
+        $raidsData = [];
+        $presentStatus = 'Présent'; // Le statut que vous souhaitez filtrer
+    
+        foreach ($raids as $raid) {
+            $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
+                'raid' => $raid,
+                'status' => $presentStatus
+            ]);            
+            $inscriptionsData = [];
+            foreach ($inscriptions as $inscription) {
+                $character = $inscription->getRegistredCharacter();
+    
+                // Gérer les spécialisations liées à l'inscription (ManyToMany)
+                $specializationsData = [];
+                foreach ($inscription->getRegistredSpecialization() as $specialization) {
+                    $specializationsData[] = [
+                        'id' => $specialization->getId(),
+                        'name' => $specialization->getName(),
+                        'role' => $specialization->getSpeRole(),
+                    ];
+                }
+    
+                // Ajouter les données de l'inscription à l'ensemble
+            $inscriptionsData[] = [
+                'id' => $inscription->getId(),
+                'status' => $inscription->getStatus(),
+                'registredCharacter' => [
+                    'id' => $character->getId(),
+                    'name' => $character->getName(),
+                    'classe' => [
+                        'id' => $character->getClasse()->getId(),
+                        'name' => $character->getClasse()->getName(),
+                    ],
+                    'specializations' => $specializationsData, // Ajout des spécialisations
                 ],
+                'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
+            ];
+            }
+    
+            // Préparer les données du raid (ajouter bossesDown, logsLink, etc. si disponible)
+            $raidsData[] = [
+                'id' => $raid->getId(),
+                'title' => $raid->getTitle(),
+                'description' => $raid->getDescription(),
+                'date' => $raid->getDate()->format(\DateTime::ATOM), // Date au format ISO 8601
+                //'bossesDown' => $raid->getBossesDown() ?: [], // Ajouter la liste des boss tombés s'ils existent
+                //'logsLink' => $raid->getLogsLink() ?: null, // Ajouter un lien vers les logs du raid s'il existe
+                'inscriptions' => $inscriptionsData, // Liste des personnages inscrits
             ];
         }
-
-        // Préparer les données pour chaque raid
-        $raidsData[] = [
-            'id' => $raid->getId(),
-            'title' => $raid->getTitle(),
-            'description' => $raid->getDescription(),
-            'date' => $raid->getDate(),
-            'bossesDown' => $bossesDown, // Exemple d'ajout des boss tombés
-            'duration' => $raid->getDuration(), // Si tu as un champ durée
-            'logsLink' => $raid->getLogsLink(), // Si tu as un lien vers les logs
-            'registeredCharacters' => $registeredCharacters,
-        ];
+    
+        return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
-
-    return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
-}
-
+    
 }

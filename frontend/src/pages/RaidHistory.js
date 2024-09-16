@@ -21,12 +21,14 @@ const RaidHistory = () => {
 
     return (
         <div className="raid-history-container">
+            <div className="raid-history-wrapper">
             <h2>Historique des Raids</h2>
             {raids.length > 0 ? (
                 <RaidHistoryList raids={raids} />
             ) : (
                 <p>Aucun raid archivé pour le moment.</p>
             )}
+            </div>
         </div>
     );
 };
