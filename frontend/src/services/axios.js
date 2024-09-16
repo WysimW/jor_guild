@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8742/api', // L'URL de votre API Symfony
+    baseURL: 'https://api.guild-jor.fr/api', // L'URL de votre API Symfony
     headers: {
         'Content-Type': 'application/json',
     },

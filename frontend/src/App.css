@@ -83,6 +83,9 @@
 }
 
 body {
+  background-image: url('../public/images/asfalt-dark.png'); /* Fond immersif */
+  background-size: cover;
+  background-position: center;
   background-color: var(--navbar-background-color);
 }
 

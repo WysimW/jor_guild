@@ -55,6 +55,7 @@ class RaidType extends AbstractType
                 ],
                 'label' => 'Difficulté',
             ])
+
         ;
     }
 

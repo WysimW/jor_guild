@@ -37,34 +37,39 @@ const RaidCalendar = () => {
     };
 
     return (
+        <div className='raid-calendar-container'>
+
         <div className="raid-calendar">
+
             <h2>Calendrier des Raids</h2>
             <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin]} // Ajouter le plugin pour l'affichage hebdomadaire
-                initialView="dayGridMonth" // Vue par défaut (mois)
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek', // Options pour basculer entre mensuel et hebdomadaire
-                }}
-                locale={frLocale} // Mettre en français
-                events={events} // Charger les événements dans le calendrier
-                eventClick={handleEventClick} // Rediriger vers la page de détails du raid
-                eventDidMount={(info) => {
-                    // Initialiser une infobulle avec tippy.js sur chaque événement
-                    tippy(info.el, {
-                        content: `<strong>${info.event.title}</strong><br>${info.event.extendedProps.description}`,
-                        allowHTML: true, // Permet de mettre du HTML dans l'infobulle
-                    });
-                }}
-                buttonText={{
-                    today: "Aujourd'hui",
-                    month: 'Mois',
-                    week: 'Semaine',
-                }}
-                initialDate={new Date()} // Date par défaut (aujourd'hui)
-            />
+  plugins={[dayGridPlugin, timeGridPlugin]}
+  initialView="dayGridMonth"
+  headerToolbar={{
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek',
+  }}
+  locale={frLocale}
+  events={events}
+  eventClick={handleEventClick}
+  eventDidMount={(info) => {
+    tippy(info.el, {
+      content: `<strong>${info.event.title}</strong><br>${info.event.extendedProps.description}`,
+      allowHTML: true,
+    });
+  }}
+  buttonText={{
+    today: "Aujourd'hui",
+    month: 'Mois',
+    week: 'Semaine',
+  }}
+  initialDate={new Date()}
+/>
+
         </div>
+        </div>
+
     );
 };
 

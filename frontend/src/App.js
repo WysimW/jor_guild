@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard'; // Une page pour l'utilisateur connecté
 import Header from './components/Header/Header';
 import Footer from './components/Footer';
+
 import RaidList from './pages/RaidList'; // Page pour afficher la liste des raids
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
 import RaidCalendar from './pages/RaidCalendar'; // Page pour afficher le calendrier des raids
@@ -16,6 +17,7 @@ import RaidHistory from './pages/RaidHistory'; // Importer le composant d'histor
 import AuthWrapper from './components/AuthWrapper/AuthWrapper'; // Importer AuthWrapper
 
 import { UserProvider } from './contexts/UserContext';
+import { Helmet } from 'react-helmet';
 
 const App = () => {
 

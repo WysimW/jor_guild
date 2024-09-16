@@ -44,6 +44,7 @@ class Raid
     #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
     private ?string $mode = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'raids')]
     private ?RaidTier $raidtier = null;
 
@@ -52,6 +53,10 @@ class Raid
      */
     #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'raids')]
     private Collection $downBosses;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $isArchived = null;
+
 
     public function __construct()
     {
@@ -161,6 +166,7 @@ class Raid
         return $this;
     }
 
+
     public function getRaidtier(): ?RaidTier
     {
         return $this->raidtier;
@@ -193,6 +199,16 @@ class Raid
     public function removeDownBoss(Boss $downBoss): static
     {
         $this->downBosses->removeElement($downBoss);
+
+    public function isArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setArchived(?bool $isArchived): static
+    {
+        $this->isArchived = $isArchived;
+
 
         return $this;
     }

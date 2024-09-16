@@ -17,16 +17,17 @@ class RaidController extends AbstractController
     #[Route('/api/raids', name: 'browse_raids', methods: ['GET'])]
     public function browse(EntityManagerInterface $em): JsonResponse
     {
-        $raids = $em->getRepository(Raid::class)->findAll();
-
+        // Récupérer uniquement les raids qui ne sont pas archivés
+        $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => false]);
+    
         // Préparer les données avec les personnages inscrits
         $raidsData = [];
-
+    
         foreach ($raids as $raid) {
             $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
-
+    
             $registeredCharacters = [];
-
+    
             foreach ($inscriptions as $inscription) {
                 $character = $inscription->getRegistredCharacter();
                 $registeredCharacters[] = [
@@ -38,7 +39,7 @@ class RaidController extends AbstractController
                     ]
                 ];
             }
-
+    
             $raidsData[] = [
                 'id' => $raid->getId(),
                 'title' => $raid->getTitle(),
@@ -47,9 +48,10 @@ class RaidController extends AbstractController
                 'registeredCharacters' => $registeredCharacters, // Inclure les personnages inscrits
             ];
         }
-
+    
         return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
+    
 
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
     public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
@@ -180,6 +182,7 @@ class RaidController extends AbstractController
         $raid = new Raid();
         $raid->setTitle($data['title']);
         $raid->setDescription($data['description']);
+        $raid->setArchived(false);
         $raid->setDate(new \DateTime($data['date']));
         $raid->setCapacity($data['capacity']);
 
