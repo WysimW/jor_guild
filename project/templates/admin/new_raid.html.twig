@@ -2,13 +2,38 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouveau Raid{% endblock %}
+{% block title %}Créer un Raid{% endblock %}
 
 {% block body %}
-    <h1>Créer un nouveau Raid</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn">Créer</button>
-    {{ form_end(form) }}
+    <h1 class="page-title">Créer un Nouveau Raid</h1>
+    <div class="form-container">
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.date) }}
+                {{ form_widget(form.date) }}
+                {{ form_errors(form.date) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.mode) }}
+                {{ form_widget(form.mode) }}
+                {{ form_errors(form.mode) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.raidTier) }}
+                {{ form_widget(form.raidTier) }}
+                {{ form_errors(form.raidTier) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.downBosses) }}
+                {{ form_widget(form.downBosses) }}
+                {{ form_errors(form.downBosses) }}
+            </div>
+            <button class="btn">Créer</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -1,0 +1,12 @@
+{# templates/admin/new_extension.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une Extension{% endblock %}
+
+{% block body %}
+    <h1>Créer une Nouvelle Extension</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">Créer</button>
+    {{ form_end(form) }}
+{% endblock %}
