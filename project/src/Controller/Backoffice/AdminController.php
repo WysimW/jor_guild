@@ -2,7 +2,7 @@
 
 // src/Controller/AdminController.php
 
-namespace App\Controller;
+namespace App\Controller\Backoffice;
 
 use App\Entity\Boss;
 use App\Entity\Raid;
@@ -11,6 +11,7 @@ use App\Form\RaidType;
 use App\Entity\RaidTier;
 use App\Entity\Extension;
 use App\Form\RaidTierType;
+use App\Form\RaidTypeEdit;
 use App\Form\ExtensionType;
 use App\Entity\GuildBossProgress;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,8 +21,27 @@ use App\Repository\GuildBossProgressRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class AdminController extends AbstractController
-{
+{   
+    #[Route('/admin', name: 'admin_dashboard')]
+    public function notifications(): Response
+    {
+        // the template path is the relative file path from `templates/`
+        return $this->render('admin/dashboard.html.twig', [
+        ]);
+    }
+
+    #[Route('/admin/raids', name: 'admin_raids_list')]
+    public function listRaids(EntityManagerInterface $em): Response
+    {
+        $raids = $em->getRepository(Raid::class)->findAll();
+
+        return $this->render('admin/raids_list.html.twig', [
+            'raids' => $raids,
+        ]);
+    }
+
     #[Route('/admin/raid/new', name: 'admin_raid_new')]
     public function newRaid(Request $request, EntityManagerInterface $em, GuildBossProgressRepository $progressRepository): Response
     {
@@ -169,5 +189,24 @@ public function updateBossStatus(Request $request, Boss $boss, EntityManagerInte
 
     return $this->redirectToRoute('admin_dashboard');
 }
+
+#[Route('/admin/raid/{id}/edit', name: 'admin_raid_edit')]
+    public function editRaid(Request $request, Raid $raid, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(RaidTypeEdit::class, $raid);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            // Rediriger vers la liste des raids après la modification
+            return $this->redirectToRoute('admin_raids_list');
+        }
+
+        return $this->render('admin/edit_raid.html.twig', [
+            'form' => $form->createView(),
+            'raid' => $raid,
+        ]);
+    }
 
 }

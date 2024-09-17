@@ -5,10 +5,11 @@ namespace App\Form;
 use App\Entity\Boss;
 use App\Entity\Raid;
 use App\Entity\RaidTier;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class BossType extends AbstractType
 {
@@ -18,8 +19,15 @@ class BossType extends AbstractType
             ->add('name')
             ->add('raidTier', EntityType::class, [
                 'class' => RaidTier::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
+            ->add('orderInRaid', IntegerType::class, [
+                'label' => 'Ordre dans le Raid',
+                'attr' => [
+                    'min' => 1,
+                ],
+            ])
+
         ;
     }
 

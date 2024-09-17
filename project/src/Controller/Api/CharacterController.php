@@ -2,7 +2,7 @@
 
 // src/Controller/CharacterController.php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Role;
 use App\Entity\Classe;

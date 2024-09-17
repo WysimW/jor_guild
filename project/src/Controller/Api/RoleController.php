@@ -2,7 +2,7 @@
 
 // src/Controller/RoleController.php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Role;
 use Doctrine\ORM\EntityManagerInterface;

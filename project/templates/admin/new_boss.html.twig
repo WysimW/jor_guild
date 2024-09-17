@@ -1,12 +1,29 @@
 {# templates/admin/new_boss.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer un Boss{% endblock %}
 
 {% block body %}
-    <h1>Créer un Nouveau Boss</h1>
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <button class="btn">Créer</button>
-    {{ form_end(form) }}
+    <h1 class="page-title">Créer un Nouveau Boss</h1>
+    <div class="form-container">
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                {{ form_errors(form.name) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.raidTier) }}
+                {{ form_widget(form.raidTier) }}
+                {{ form_errors(form.raidTier) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.orderInRaid) }}
+                {{ form_widget(form.orderInRaid) }}
+                {{ form_errors(form.orderInRaid) }}
+            </div>
+            <button class="btn">Créer</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -57,6 +57,15 @@ class Raid
     #[ORM\Column(nullable: true)]
     private ?bool $isArchived = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wlogLink = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wanalyzerLink = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wipefestLink = null;
+
 
     public function __construct()
     {
@@ -212,6 +221,42 @@ class Raid
     {
         $this->isArchived = $isArchived;
 
+
+        return $this;
+    }
+
+    public function getWlogLink(): ?string
+    {
+        return $this->wlogLink;
+    }
+
+    public function setWlogLink(?string $wlogLink): static
+    {
+        $this->wlogLink = $wlogLink;
+
+        return $this;
+    }
+
+    public function getWanalyzerLink(): ?string
+    {
+        return $this->wanalyzerLink;
+    }
+
+    public function setWanalyzerLink(?string $wanalyzerLink): static
+    {
+        $this->wanalyzerLink = $wanalyzerLink;
+
+        return $this;
+    }
+
+    public function getWipefestLink(): ?string
+    {
+        return $this->wipefestLink;
+    }
+
+    public function setWipefestLink(?string $wipefestLink): static
+    {
+        $this->wipefestLink = $wipefestLink;
 
         return $this;
     }

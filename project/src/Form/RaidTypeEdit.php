@@ -13,10 +13,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 // Ajoutez ceci si vous ne l'avez pas déjà
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
-class RaidType extends AbstractType
+class RaidTypeEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -54,6 +55,18 @@ class RaidType extends AbstractType
                     'Mythique' => 'Mythique',
                 ],
                 'label' => 'Difficulté',
+            ])
+            ->add('wlogLink', UrlType::class, [
+                'label' => 'Lien Warcraft Logs',
+                'required' => false,
+            ])
+            ->add('wanalyzerLink', UrlType::class, [
+                'label' => 'Lien WoW Analyzer',
+                'required' => false,
+            ])
+            ->add('wipeFestLink', UrlType::class, [
+                'label' => 'Lien WipeFest',
+                'required' => false,
             ])
 
         ;

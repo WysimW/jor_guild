@@ -1,18 +1,79 @@
+{# templates/base.html.twig #}
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Backoffice{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
+    <!-- Inclure les icônes Font Awesome pour les icônes du menu -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-eZODsckG+wExXGDC9t83fth8eQm2xlYcP3on6DB1oO25dVxBIQgFwT9A6NJl4Pld" crossorigin="anonymous">
+<!-- CSS de Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-        {% block stylesheets %}
-        {% endblock %}
+<!-- JS de Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+</head>
+<body>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="sidebar__logo">
+                <img src="/images/guilde-logo.png" alt="Logo de la guilde">
+                <span>Backoffice</span>
+            </div>
+            <nav class="sidebar__nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="{{ path('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li class="nav__item nav__item--has-submenu">
+                        <a href="#"><i class="fas fa-dragon"></i> Gestion des Raids <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                                <li class="submenu__item"><a href="{{ path('admin_raids_list') }}">Liste des Raids</a></li>
+                            <li class="submenu__item"><a href="{{ path('admin_raid_new') }}">Nouveau Raid</a></li>
+                            <li class="submenu__item"><a href="{{ path('admin_raidtier_new') }}">Nouveau RaidTier</a></li>
+                            <li class="submenu__item"><a href="{{ path('admin_boss_new') }}">Nouveau Boss</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav__item nav__item--has-submenu">
+                        <a href="#"><i class="fas fa-book"></i> Gestion des Extensions <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li class="submenu__item"><a href="{{ path('admin_extension_new') }}">Nouvelle Extension</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="header__user">
+                    <span>Bienvenue, Admin</span>
+                    <!-- Vous pouvez ajouter un menu utilisateur ici -->
+                </div>
+            </header>
+
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+
+            <footer class="footer">
+                <p>Backoffice de la guilde WoW &copy; {{ "now"|date("Y") }}</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Script pour le menu déroulant -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var submenuLinks = document.querySelectorAll('.nav__item--has-submenu > a');
+
+            submenuLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('nav__item--submenu-open');
+                });
+            });
+        });
+    </script>
+</body>
 </html>

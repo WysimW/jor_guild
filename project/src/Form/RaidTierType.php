@@ -17,7 +17,7 @@ class RaidTierType extends AbstractType
             ->add('name')
             ->add('extension', EntityType::class, [
                 'class' => Extension::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }

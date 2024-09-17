@@ -2,7 +2,7 @@
 
 // src/Controller/RaidController.php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Entity\Raid;
 use App\Entity\RaidRegister;

@@ -33,6 +33,9 @@ class Boss
     #[ORM\OneToMany(targetEntity: GuildBossProgress::class, mappedBy: 'boss')]
     private Collection $guildBossProgress;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $orderInRaid = null;
+
     public function __construct()
     {
         $this->raids = new ArrayCollection();
@@ -120,6 +123,18 @@ class Boss
                 $guildBossProgress->setBoss(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrderInRaid(): ?int
+    {
+        return $this->orderInRaid;
+    }
+
+    public function setOrderInRaid(?int $orderInRaid): static
+    {
+        $this->orderInRaid = $orderInRaid;
 
         return $this;
     }
