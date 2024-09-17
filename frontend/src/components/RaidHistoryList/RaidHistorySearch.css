@@ -1,0 +1,27 @@
+/* Styles pour le formulaire de recherche */
+
+.raid-history-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.raid-history-search input,
+.raid-history-search select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.raid-history-search button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.raid-history-search button:hover {
+    background-color: #16a085;
+}

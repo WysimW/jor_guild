@@ -7,6 +7,7 @@ namespace App\Controller\Api;
 use App\Entity\Raid;
 use App\Entity\RaidRegister;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,15 +20,15 @@ class RaidController extends AbstractController
     {
         // Récupérer uniquement les raids qui ne sont pas archivés
         $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => false]);
-    
+
         // Préparer les données avec les personnages inscrits
         $raidsData = [];
-    
+
         foreach ($raids as $raid) {
             $inscriptions = $raid->getRaidRegisters(); // Récupérer les inscriptions au raid
-    
+
             $registeredCharacters = [];
-    
+
             foreach ($inscriptions as $inscription) {
                 $character = $inscription->getRegistredCharacter();
                 $registeredCharacters[] = [
@@ -39,7 +40,7 @@ class RaidController extends AbstractController
                     ]
                 ];
             }
-    
+
             $raidsData[] = [
                 'id' => $raid->getId(),
                 'title' => $raid->getTitle(),
@@ -48,10 +49,10 @@ class RaidController extends AbstractController
                 'registeredCharacters' => $registeredCharacters, // Inclure les personnages inscrits
             ];
         }
-    
+
         return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
-    
+
 
     #[Route('/api/raid/{id}/details', name: 'raid_details', methods: ['GET'])]
     public function raidDetails(int $id, EntityManagerInterface $em): JsonResponse
@@ -226,20 +227,71 @@ class RaidController extends AbstractController
     }
 
     #[Route('/api/raids/history', name: 'raid_history', methods: ['GET'])]
-    public function history(EntityManagerInterface $em): JsonResponse
+    public function history(Request $request, EntityManagerInterface $em): JsonResponse
     {
-        // Récupérer les raids archivés (avec isArchived à true)
-        $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
+        // Récupérer les paramètres de requête
+        $search = $request->query->get('search', '');
+        $difficulty = $request->query->get('difficulty', '');
+        $boss = $request->query->get('boss', '');
+        $sort = $request->query->get('sort', 'date');
+        $order = $request->query->get('order', 'desc');
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 10);
     
+        // Construire la requête
+        $raidRepository = $em->getRepository(Raid::class);
+        $queryBuilder = $raidRepository->createQueryBuilder('r');
+    
+        // Filtrer les raids archivés
+        $queryBuilder->andWhere('r.isArchived = :archived')
+            ->setParameter('archived', true);
+    
+        // Filtrer par difficulté
+        if (!empty($difficulty)) {
+            $queryBuilder->andWhere('r.mode = :difficulty')
+                ->setParameter('difficulty', $difficulty);
+        }
+    
+        // Recherche par titre ou description
+        if (!empty($search)) {
+            $queryBuilder->andWhere('r.title LIKE :search OR r.description LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+    
+        // Tri
+        $allowedSortFields = ['date', 'title'];
+        if (in_array($sort, $allowedSortFields)) {
+            $queryBuilder->orderBy('r.'.$sort, $order === 'asc' ? 'ASC' : 'DESC');
+        } else {
+            // Tri par défaut si le paramètre 'sort' n'est pas valide
+            $queryBuilder->orderBy('r.date', 'DESC');
+        }
+    
+        // Pagination
+        $queryBuilder->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit);
+    
+        // Créer le Paginator
+        $query = $queryBuilder->getQuery();
+        $paginator = new Paginator($query, $fetchJoinCollection = true);
+    
+        // Compter le nombre total de raids pour la pagination
+        $totalRaidsCount = count($paginator);
+    
+        // Préparer les données à retourner
         $raidsData = [];
         $presentStatus = 'Présent'; // Le statut que vous souhaitez filtrer
     
-        foreach ($raids as $raid) {
+        foreach ($paginator as $raid) {
+            // Charger les relations nécessaires
+            $em->initializeObject($raid);
+            $em->initializeObject($raid->getDownBosses());
+            $em->initializeObject($raid->getRaidRegisters());
+    
             // Récupérer les inscriptions au raid avec le statut 'Présent'
-            $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
-                'raid' => $raid,
-                'status' => $presentStatus
-            ]);
+            $inscriptions = $raid->getRaidRegisters()->filter(function($inscription) use ($presentStatus) {
+                return $inscription->getStatus() === $presentStatus;
+            });
     
             $inscriptionsData = [];
             foreach ($inscriptions as $inscription) {
@@ -298,8 +350,12 @@ class RaidController extends AbstractController
             ];
         }
     
-        return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
+        // Retourner les données avec les informations de pagination
+        return $this->json([
+            'data' => $raidsData,
+            'total' => $totalRaidsCount,
+            'page' => $page,
+            'limit' => $limit,
+        ], 200, [], ['groups' => 'raid:read']);
     }
-    
-    
 }
