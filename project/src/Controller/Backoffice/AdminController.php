@@ -32,59 +32,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/raids', name: 'admin_raids_list')]
-    public function listRaids(EntityManagerInterface $em): Response
-    {
-        $raids = $em->getRepository(Raid::class)->findAll();
-
-        return $this->render('admin/raids_list.html.twig', [
-            'raids' => $raids,
-        ]);
-    }
-
-    #[Route('/admin/raid/new', name: 'admin_raid_new')]
-    public function newRaid(Request $request, EntityManagerInterface $em, GuildBossProgressRepository $progressRepository): Response
-    {
-        $raid = new Raid();
-        $form = $this->createForm(RaidType::class, $raid);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $raid->setArchived(false);
-            $em->persist($raid);
-            $em->flush();
-
-            // Mettre à jour GuildBossProgress en fonction des boss vaincus
-            foreach ($raid->getDownBosses() as $boss) {
-                // Mettre à jour la progression de guilde pour ce boss à la difficulté du raid
-                // Supposons que le raid a une propriété 'difficulty'
-                $difficulty = $raid->getMode(); // Assurez-vous que cette propriété existe
-
-                $progress = $progressRepository->findOneBy([
-                    'boss' => $boss,
-                    'difficulty' => $difficulty,
-                ]);
-
-                if ($progress) {
-                    if (!$progress->getDefeated()) {
-                        $progress->setDefeated(true);
-                        $progress->setFirstKillDate(new \DateTime());
-                    }
-                    $progress->setKillCount($progress->getKillCount() + 1);
-                    $em->persist($progress);
-                }
-            }
-
-            $em->flush();
-
-            return $this->redirectToRoute('admin_dashboard');
-        }
-
-        return $this->render('admin/new_raid.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
     // Méthode pour créer une nouvelle Extension
     #[Route('/admin/extension/new', name: 'admin_extension_new')]
     public function newExtension(Request $request, EntityManagerInterface $em): Response
@@ -190,23 +137,6 @@ public function updateBossStatus(Request $request, Boss $boss, EntityManagerInte
     return $this->redirectToRoute('admin_dashboard');
 }
 
-#[Route('/admin/raid/{id}/edit', name: 'admin_raid_edit')]
-    public function editRaid(Request $request, Raid $raid, EntityManagerInterface $em): Response
-    {
-        $form = $this->createForm(RaidTypeEdit::class, $raid);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-
-            // Rediriger vers la liste des raids après la modification
-            return $this->redirectToRoute('admin_raids_list');
-        }
-
-        return $this->render('admin/edit_raid.html.twig', [
-            'form' => $form->createView(),
-            'raid' => $raid,
-        ]);
-    }
 
 }

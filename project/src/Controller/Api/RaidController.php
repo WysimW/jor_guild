@@ -229,18 +229,18 @@ class RaidController extends AbstractController
     public function history(EntityManagerInterface $em): JsonResponse
     {
         // Récupérer les raids archivés (avec isArchived à true)
-        //$raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
-        $raids = $em->getRepository(Raid::class)->findAll();
-
-
+        $raids = $em->getRepository(Raid::class)->findBy(['isArchived' => true]);
+    
         $raidsData = [];
         $presentStatus = 'Présent'; // Le statut que vous souhaitez filtrer
     
         foreach ($raids as $raid) {
+            // Récupérer les inscriptions au raid avec le statut 'Présent'
             $inscriptions = $em->getRepository(RaidRegister::class)->findBy([
                 'raid' => $raid,
                 'status' => $presentStatus
-            ]);            
+            ]);
+    
             $inscriptionsData = [];
             foreach ($inscriptions as $inscription) {
                 $character = $inscription->getRegistredCharacter();
@@ -256,35 +256,50 @@ class RaidController extends AbstractController
                 }
     
                 // Ajouter les données de l'inscription à l'ensemble
-            $inscriptionsData[] = [
-                'id' => $inscription->getId(),
-                'status' => $inscription->getStatus(),
-                'registredCharacter' => [
-                    'id' => $character->getId(),
-                    'name' => $character->getName(),
-                    'classe' => [
-                        'id' => $character->getClasse()->getId(),
-                        'name' => $character->getClasse()->getName(),
+                $inscriptionsData[] = [
+                    'id' => $inscription->getId(),
+                    'status' => $inscription->getStatus(),
+                    'registredCharacter' => [
+                        'id' => $character->getId(),
+                        'name' => $character->getName(),
+                        'classe' => [
+                            'id' => $character->getClasse()->getId(),
+                            'name' => $character->getClasse()->getName(),
+                        ],
+                        'specializations' => $specializationsData, // Ajout des spécialisations
                     ],
-                    'specializations' => $specializationsData, // Ajout des spécialisations
-                ],
-                'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
-            ];
+                    'registeredDate' => $inscription->getRegisteredDate()->format('d/m/Y H:i'),
+                ];
             }
     
-            // Préparer les données du raid (ajouter bossesDown, logsLink, etc. si disponible)
+            // Récupérer les boss tombés pour le raid
+            $downedBossesData = [];
+            foreach ($raid->getDownBosses() as $boss) {
+                $downedBossesData[] = [
+                    'id' => $boss->getId(),
+                    'name' => $boss->getName(),
+                    // Ajoutez d'autres propriétés du boss si nécessaire
+                ];
+            }
+    
+            // Préparer les données du raid
             $raidsData[] = [
                 'id' => $raid->getId(),
                 'title' => $raid->getTitle(),
                 'description' => $raid->getDescription(),
                 'date' => $raid->getDate()->format(\DateTime::ATOM), // Date au format ISO 8601
-                //'bossesDown' => $raid->getBossesDown() ?: [], // Ajouter la liste des boss tombés s'ils existent
-                //'logsLink' => $raid->getLogsLink() ?: null, // Ajouter un lien vers les logs du raid s'il existe
+                'downedBosses' => $downedBossesData, // Ajout de la liste des boss tombés
                 'inscriptions' => $inscriptionsData, // Liste des personnages inscrits
+                'links' => [
+                    'warcraftLogs' => $raid->getWlogLink(),
+                    'wowAnalyzer' => $raid->getWanalyzerLink(),
+                    'wipeFest' => $raid->getWipefestLink(),
+                ]
             ];
         }
     
         return $this->json($raidsData, 200, [], ['groups' => 'raid:read']);
     }
+    
     
 }

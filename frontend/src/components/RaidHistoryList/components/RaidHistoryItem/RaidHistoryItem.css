@@ -7,6 +7,7 @@
     border-radius: 5px;
     background-color: rgba(15, 15, 15, 0.8); /* Fond sombre */
     transition: box-shadow 0.3s ease;
+    font-family: var(--font-nav);
 }
 
 .raid-history-list__item:hover {
@@ -69,4 +70,41 @@
 
 .raid-history-list__logs a:hover {
     color: var(--link-hover-color);
+}
+
+/* Styles pour les liens du raid */
+/* Styles pour les liens dans RaidHistoryItem */
+.raid-history-list__links a {
+    position: relative;
+    text-decoration: none;
+    font-family: var(--font-sans-serif);
+    color: var(--text-color);
+    font-size: var(--font-size-nav);
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .raid-history-list__links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--link-hover-bg);
+    transition: width 0.3s ease;
+  }
+  
+  .raid-history-list__links a:hover::after {
+    width: 100%;
+  }
+  
+  .raid-history-list__links a:hover {
+    color: var(--text-color);
+  }
+  
+
+
+.raid-history-list__links strong {
+    margin-right: 5px;
 }

@@ -6,32 +6,38 @@
 {% block body %}
     <h1 class="page-title">Liste des Raids</h1>
     <table class="table">
-        <thead>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom du Raid</th>
+            <th>Date</th>
+            <th>Difficulté</th>
+            <th>Statut</th> <!-- Nouvelle colonne pour le statut -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for raid in raids %}
             <tr>
-                <th>ID</th>
-                <th>Nom du Raid</th>
-                <th>Date</th>
-                <th>Difficulté</th>
-                <th>Actions</th>
+                <td>{{ raid.id }}</td>
+                <td>{{ raid.title }}</td>
+                <td>{{ raid.date|date('d/m/Y H:i') }}</td>
+                <td>{{ raid.mode }}</td>
+                <td>{{ raid.isArchived ? 'Archivé' : 'Actif' }}</td> <!-- Affichage du statut -->
+                <td>
+                    <a href="{{ path('admin_raid_edit', { id: raid.id }) }}" class="btn btn-sm btn-primary">Éditer</a>
+                    {% if raid.isArchived %}
+                        <a href="{{ path('admin_raid_toggle_archive', { id: raid.id }) }}" class="btn btn-sm btn-warning">Désarchiver</a>
+                    {% else %}
+                        <a href="{{ path('admin_raid_toggle_archive', { id: raid.id }) }}" class="btn btn-sm btn-secondary">Archiver</a>
+                    {% endif %}
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            {% for raid in raids %}
-                <tr>
-                    <td>{{ raid.id }}</td>
-                    <td>{{ raid.title }}</td>
-                    <td>{{ raid.date|date('d/m/Y H:i') }}</td>
-                    <td>{{ raid.mode }}</td>
-                    <td>
-                        <a href="{{ path('admin_raid_edit', { id: raid.id }) }}" class="btn btn-sm btn-primary">Éditer</a>
-                        <!-- Vous pouvez ajouter d'autres actions ici, comme Supprimer -->
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">Aucun raid disponible.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun raid disponible.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

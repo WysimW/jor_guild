@@ -11,7 +11,6 @@ const RaidHistoryItem = ({ raid }) => {
         setIsOpen(!isOpen);
     };
 
-    console.log(raid)
     // Fonction pour trier les participants par rôle
     const sortedByRole = raid.inscriptions.reduce((acc, inscription) => {
         const specialization = inscription.registredCharacter.specializations[0]; // Prendre la première spécialisation
@@ -26,6 +25,46 @@ const RaidHistoryItem = ({ raid }) => {
         return acc;
     }, {});
 
+    const renderLinks = () => {
+        const { links } = raid;
+        if (!links) return null;
+    
+        const linkElements = [];
+    
+        if (links.warcraftLogs) {
+            linkElements.push(
+                <a href={links.warcraftLogs} target="_blank" rel="noopener noreferrer" key="warcraftLogs">
+                    Warcraft Logs
+                </a>
+            );
+        }
+    
+        if (links.wowAnalyzer) {
+            linkElements.push(
+                <a href={links.wowAnalyzer} target="_blank" rel="noopener noreferrer" key="wowAnalyzer">
+                    WoW Analyzer
+                </a>
+            );
+        }
+    
+        if (links.wipeFest) {
+            linkElements.push(
+                <a href={links.wipeFest} target="_blank" rel="noopener noreferrer" key="wipeFest">
+                    WipeFest
+                </a>
+            );
+        }
+    
+        if (linkElements.length === 0) return null;
+    
+        return (
+            <p className="raid-history-list__links">
+                {linkElements.reduce((prev, curr) => [prev, ' | ', curr])}
+            </p>
+        );
+    };
+    
+
     return (
         <li className="raid-history-list__item">
             <div className="raid-history-list__header" onClick={toggleDropdown}>
@@ -39,17 +78,17 @@ const RaidHistoryItem = ({ raid }) => {
             <div className={`raid-history-list__details ${isOpen ? 'raid-history-list__details--open' : ''}`}>
                 <p className="raid-history-list__description">{raid.description}</p>
                 <p className="raid-history-list__bosses">
-                    <strong>Boss tombés :</strong>
-                    {Array.isArray(raid.bossesDown) && raid.bossesDown.length > 0
-                        ? raid.bossesDown.join(', ')
-                        : 'Aucun boss tombé'}
-                </p>
+    <strong>Boss tombés :</strong>{' '}
+    {Array.isArray(raid.downedBosses) && raid.downedBosses.length > 0
+        ? raid.downedBosses.map(boss => boss.name).join(', ')
+        : 'Aucun boss tombé'}
+</p>
+
 
                 <RaidParticipantsList sortedByRole={sortedByRole} /> {/* Passer sortedParticipantsByRole ici */}
 
-                {raid.logsLink && (
-                    <p className="raid-history-list__logs"><a href={raid.logsLink} target="_blank" rel="noopener noreferrer">Voir les logs du raid</a></p>
-                )}
+                {renderLinks()}
+
             </div>
         </li>
     );

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap'); /* Import Merriweather */
+@import url('https://fonts.cdnfonts.com/css/plush-trial');
 
 /* Importation de CanalDemiRomain */
 @font-face {
@@ -80,6 +81,7 @@
   --font-text: 'Lora', serif;
   --font-nav: 'Merriweather', serif; /* Nouvelle police serif pour le menu */
   --font-sans-serif: 'CanalRomain'; /* Nouvelle police serif pour le menu */
+  --font-plush: 'Plush Trial';
 }
 
 body {
