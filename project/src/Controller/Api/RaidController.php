@@ -230,7 +230,7 @@ class RaidController extends AbstractController
     public function history(Request $request, EntityManagerInterface $em): JsonResponse
     {
         // Récupérer les paramètres de requête
-        $search = $request->query->get('search', '');
+        $search = $request->query->get('searchTerm', '');
         $difficulty = $request->query->get('difficulty', '');
         $boss = $request->query->get('boss', '');
         $sort = $request->query->get('sort', 'date');
@@ -254,8 +254,8 @@ class RaidController extends AbstractController
     
         // Recherche par titre ou description
         if (!empty($search)) {
-            $queryBuilder->andWhere('r.title LIKE :search OR r.description LIKE :search')
-                ->setParameter('search', '%'.$search.'%');
+            $queryBuilder->andWhere('r.title LIKE :searchTerm OR r.description LIKE :searchTerm')
+                ->setParameter('searchTerm', '%'.$search.'%');
         }
     
         // Tri
@@ -267,13 +267,12 @@ class RaidController extends AbstractController
             $queryBuilder->orderBy('r.date', 'DESC');
         }
     
-        // Pagination
-        $queryBuilder->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit);
-    
         // Créer le Paginator
+        $queryBuilder->setFirstResult(($page - 1) * $limit)
+        ->setMaxResults($limit);
+
         $query = $queryBuilder->getQuery();
-        $paginator = new Paginator($query, $fetchJoinCollection = true);
+        $paginator = new Paginator($query, true);
     
         // Compter le nombre total de raids pour la pagination
         $totalRaidsCount = count($paginator);

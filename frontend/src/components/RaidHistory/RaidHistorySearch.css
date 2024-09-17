@@ -36,6 +36,8 @@
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 10px;
+    padding-right: 30px !important;
+
 }
 
 .raid-history-search button {
@@ -51,7 +53,7 @@
 }
 
 .raid-history-search button:hover {
-    background-color: #16a085;
+    background-color: var(--color-red);
 }
 
 .search-icon {
@@ -64,5 +66,5 @@
 
 .raid-history-search input[type="text"]:hover,
 .raid-history-search select:hover {
-    border-color: #1abc9c;
+    border-color: var(--color-red);
 }

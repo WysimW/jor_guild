@@ -1,29 +1,32 @@
+// Pagination.js
+
 import React from 'react';
 import './Pagination.css';
 
 const Pagination = ({ total, page, limit, onPageChange }) => {
     const totalPages = Math.ceil(total / limit);
 
-    if (totalPages <= 1) return null; // Ne pas afficher la pagination s'il n'y a qu'une page
+    if (totalPages <= 1) return null;
 
-    const pages = [];
+    const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
+        pageNumbers.push(i);
     }
 
     return (
         <div className="pagination">
-            {pages.map((pageNumber) => (
+            {pageNumbers.map((number) => (
                 <button
-                    key={pageNumber}
-                    onClick={() => onPageChange(pageNumber)}
-                    className={pageNumber === page ? 'active' : ''}
+                    key={number}
+                    onClick={() => onPageChange(number)}
+                    className={`pagination-number ${page === number ? 'active' : ''}`}
                 >
-                    {pageNumber}
+                    {number}
                 </button>
             ))}
         </div>
     );
 };
+
 
 export default Pagination;

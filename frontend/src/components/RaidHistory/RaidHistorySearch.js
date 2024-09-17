@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './RaidHistorySearch.css';
 
 const RaidHistorySearch = ({ onSearch }) => {
@@ -8,34 +8,36 @@ const RaidHistorySearch = ({ onSearch }) => {
     const [sort, setSort] = useState('date');
     const [order, setOrder] = useState('desc');
 
-    // State pour gérer le débonçage
-    const [debouncedSearchParams, setDebouncedSearchParams] = useState({});
+    const prevSearchParamsRef = useRef({
+        searchTerm,
+        difficulty,
+        boss,
+        sort,
+        order,
+    });
 
-    // useEffect pour gérer le débonçage
     useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedSearchParams({
-                searchTerm,
-                difficulty,
-                boss,
-                sort,
-                order,
-            });
-        }, 500); // Délai de 500ms
-
-        // Nettoie le timeout si les valeurs changent avant la fin du délai
-        return () => {
-            clearTimeout(handler);
+        const newSearchParams = {
+            searchTerm,
+            difficulty,
+            boss,
+            sort,
+            order,
         };
-    }, [searchTerm, difficulty, boss, sort, order]);
 
-    // useEffect pour déclencher la recherche lorsque les paramètres débouncés changent
-    useEffect(() => {
-        onSearch(debouncedSearchParams);
-    }, [debouncedSearchParams, onSearch]);
+        // Comparer les nouveaux paramètres avec les anciens
+        const prevSearchParams = prevSearchParamsRef.current;
+
+        const hasChanged = JSON.stringify(newSearchParams) !== JSON.stringify(prevSearchParams);
+
+        if (hasChanged) {
+            onSearch(newSearchParams);
+            prevSearchParamsRef.current = newSearchParams;
+        }
+    }, [searchTerm, difficulty, boss, sort, order, onSearch]);
 
     return (
-        <form className="raid-history-search">
+        <div className="raid-history-search">
             <input
                 type="text"
                 placeholder="Rechercher un raid..."
@@ -66,7 +68,7 @@ const RaidHistorySearch = ({ onSearch }) => {
                 <option value="desc">Décroissant</option>
                 <option value="asc">Croissant</option>
             </select>
-        </form>
+        </div>
     );
 };
 
