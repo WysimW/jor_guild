@@ -1,6 +1,4 @@
-// src/components/RaidHistorySearch/RaidHistorySearch.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './RaidHistorySearch.css';
 
 const RaidHistorySearch = ({ onSearch }) => {
@@ -10,16 +8,37 @@ const RaidHistorySearch = ({ onSearch }) => {
     const [sort, setSort] = useState('date');
     const [order, setOrder] = useState('desc');
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        onSearch({ searchTerm, difficulty, boss, sort, order });
-    };
+    // State pour gérer le débonçage
+    const [debouncedSearchParams, setDebouncedSearchParams] = useState({});
+
+    // useEffect pour gérer le débonçage
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearchParams({
+                searchTerm,
+                difficulty,
+                boss,
+                sort,
+                order,
+            });
+        }, 500); // Délai de 500ms
+
+        // Nettoie le timeout si les valeurs changent avant la fin du délai
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchTerm, difficulty, boss, sort, order]);
+
+    // useEffect pour déclencher la recherche lorsque les paramètres débouncés changent
+    useEffect(() => {
+        onSearch(debouncedSearchParams);
+    }, [debouncedSearchParams, onSearch]);
 
     return (
-        <form className="raid-history-search" onSubmit={handleSearch}>
+        <form className="raid-history-search">
             <input
                 type="text"
-                placeholder="Rechercher..."
+                placeholder="Rechercher un raid..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -33,7 +52,7 @@ const RaidHistorySearch = ({ onSearch }) => {
 
             <input
                 type="text"
-                placeholder="Boss..."
+                placeholder="Rechercher un boss..."
                 value={boss}
                 onChange={(e) => setBoss(e.target.value)}
             />
@@ -47,8 +66,6 @@ const RaidHistorySearch = ({ onSearch }) => {
                 <option value="desc">Décroissant</option>
                 <option value="asc">Croissant</option>
             </select>
-
-            <button type="submit">Rechercher</button>
         </form>
     );
 };

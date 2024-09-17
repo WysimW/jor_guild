@@ -30,8 +30,6 @@ const RaidHistory = () => {
         }
     };
 
-    console.log(raids)
-
     useEffect(() => {
         fetchRaids(searchParams);
     }, [page, searchParams]);

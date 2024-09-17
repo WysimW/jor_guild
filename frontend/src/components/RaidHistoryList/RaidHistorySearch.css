@@ -1,27 +1,68 @@
 /* Styles pour le formulaire de recherche */
 
+/* RaidHistorySearch.css */
+
+/* Styles pour le formulaire de recherche */
 .raid-history-search {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+    justify-content: center;
 }
 
-.raid-history-search input,
+.raid-history-search input[type="text"],
 .raid-history-search select {
-    padding: 8px;
+    padding: 10px 15px;
     font-size: 16px;
+    border: 1px solid #ccc;
+    background-color: rgba(15, 15, 15, 0.8);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 4px;
+    outline: none;
+}
+
+.raid-history-search input::placeholder {
+    color: #aaa;
+}
+
+.raid-history-search select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D'14'%20height%3D'14'%20viewBox%3D'0%200%2014%2014'%20xmlns%3D'http://www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M4%205l3%203%203-3'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20fill-rule%3D'evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
 }
 
 .raid-history-search button {
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-size: 16px;
     background-color: #1abc9c;
     color: #fff;
     border: none;
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .raid-history-search button:hover {
     background-color: #16a085;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.raid-history-search input[type="text"]:hover,
+.raid-history-search select:hover {
+    border-color: #1abc9c;
 }
