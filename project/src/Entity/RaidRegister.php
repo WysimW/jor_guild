@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RaidRegisterRepository::class)]
+#[UniqueEntity(
+    fields: ['raid', 'registeredCharacter'],
+    message: 'This port is already in use on that host.',
+    errorPath: 'port',
+)]
 class RaidRegister
 {
     #[ORM\Id]

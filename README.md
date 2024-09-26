@@ -19,6 +19,7 @@ docker-compose up --build
 
 php bin/console make:entity
 
+php bin/console doctrine:migrations:diff
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 

@@ -21,30 +21,40 @@ class RaidRegisterController extends AbstractController
     public function registerForRaid(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-
+    
         $user = $this->getUser();
         if (!$user) {
             return new JsonResponse(['error' => 'Vous devez être connecté pour vous inscrire à un raid.'], 401);
         }
-
+    
         // Récupérer le raid
         $raid = $em->getRepository(Raid::class)->find($data['raid_id']);
         if (!$raid) {
             return new JsonResponse(['error' => 'Raid non trouvé.'], 404);
         }
-
+    
         // Récupérer le personnage sélectionné
         $character = $em->getRepository(Character::class)->find($data['character_id']);
         if (!$character || $character->getUser() !== $user) {
             return new JsonResponse(['error' => 'Personnage non valide.'], 404);
         }
-
+    
+        // Vérifier si une inscription existe déjà pour ce personnage et ce raid
+        $existingRegistration = $em->getRepository(RaidRegister::class)->findOneBy([
+            'raid' => $raid,
+            'registredCharacter' => $character,
+        ]);
+    
+        if ($existingRegistration) {
+            return new JsonResponse(['error' => 'Votre personnage est déjà inscrit à ce raid.'], 400);
+        }
+    
         // Récupérer la spécialisation sélectionnée
         $specialization = $em->getRepository(Specialization::class)->find($data['specialization_id']);
         if (!$specialization) {
             return new JsonResponse(['error' => 'Spécialisation non trouvée.'], 404);
         }
-
+    
         // Créer l'inscription au raid
         $raidRegister = new RaidRegister();
         $raidRegister->setRaid($raid);
@@ -52,14 +62,14 @@ class RaidRegisterController extends AbstractController
         $raidRegister->setStatus($data['status']);
         $raidRegister->addRegistredSpecialization($specialization);
         $raidRegister->setRegisteredDate(new \DateTime()); // Ajouter la date d'inscription
-
-
+    
         // Sauvegarder dans la base de données
         $em->persist($raidRegister);
         $em->flush();
-
+    
         return new JsonResponse(['message' => 'Inscription réussie.'], 201);
     }
+    
 
     #[Route('/api/raid/register/{id}', name: 'raid_register_edit', methods: ['PUT'])]
     public function editRaidRegistration(int $id, Request $request, EntityManagerInterface $em): JsonResponse

@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RaidController extends AbstractController
 {
-    #[Route('/admin/raids', name: 'admin_raids_list')]
+    #[Route('/raids', name: 'admin_raids_list')]
     public function listRaids(EntityManagerInterface $em): Response
     {
         $raids = $em->getRepository(Raid::class)->findAll();
@@ -33,7 +33,7 @@ class RaidController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/raid/new', name: 'admin_raid_new')]
+    #[Route('/raid/new', name: 'admin_raid_new')]
     public function newRaid(Request $request, EntityManagerInterface $em, GuildBossProgressRepository $progressRepository): Response
     {
         $raid = new Raid();
@@ -76,7 +76,7 @@ class RaidController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/raid/{id}/edit', name: 'admin_raid_edit')]
+    #[Route('/raid/{id}/edit', name: 'admin_raid_edit')]
     public function editRaid(Request $request, Raid $raid, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(RaidTypeEdit::class, $raid);
@@ -94,7 +94,7 @@ class RaidController extends AbstractController
             'raid' => $raid,
         ]);
     }
-    #[Route('/admin/raid/{id}/toggle-archive', name: 'admin_raid_toggle_archive')]
+    #[Route('/raid/{id}/toggle-archive', name: 'admin_raid_toggle_archive')]
     public function toggleArchiveRaid(Raid $raid, EntityManagerInterface $em): RedirectResponse
     {
         $raid->setArchived(!$raid->isArchived());

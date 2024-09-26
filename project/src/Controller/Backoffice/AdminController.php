@@ -24,7 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {   
-    #[Route('/admin', name: 'admin_dashboard')]
+    #[Route('/', name: 'admin_dashboard')]
     public function notifications(): Response
     {
         // the template path is the relative file path from `templates/`
@@ -33,7 +33,7 @@ class AdminController extends AbstractController
     }
 
     // Méthode pour créer une nouvelle Extension
-    #[Route('/admin/extension/new', name: 'admin_extension_new')]
+    #[Route('/extension/new', name: 'admin_extension_new')]
     public function newExtension(Request $request, EntityManagerInterface $em): Response
     {
         $extension = new Extension();
@@ -53,7 +53,7 @@ class AdminController extends AbstractController
     }
 
     // Méthode pour créer un nouveau RaidTier
-    #[Route('/admin/raidtier/new', name: 'admin_raidtier_new')]
+    #[Route('/raidtier/new', name: 'admin_raidtier_new')]
     public function newRaidTier(Request $request, EntityManagerInterface $em): Response
     {
         $raidTier = new RaidTier();
@@ -73,7 +73,7 @@ class AdminController extends AbstractController
     }
 
     // Méthode pour créer un nouveau Boss
-    #[Route('/admin/boss/new', name: 'admin_boss_new')]
+    #[Route('/boss/new', name: 'admin_boss_new')]
     public function newBoss(Request $request, EntityManagerInterface $em): Response
     {
         $boss = new Boss();
@@ -106,7 +106,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/boss/{id}/update-status', name: 'admin_boss_update_status', methods: ['POST'])]
+    #[Route('/boss/{id}/update-status', name: 'admin_boss_update_status', methods: ['POST'])]
 public function updateBossStatus(Request $request, Boss $boss, EntityManagerInterface $em): Response
 {
     // Récupérer les données du formulaire
