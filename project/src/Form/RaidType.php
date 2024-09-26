@@ -35,18 +35,6 @@ class RaidType extends AbstractType
                 'label' => 'RaidTier associé',
             ])
             // Ajoutez le champ downBosses
-            ->add('downBosses', EntityType::class, [
-                'class' => Boss::class,
-                'choice_label' => 'name',
-                'label' => 'Boss vaincus',
-                'multiple' => true,
-                'expanded' => true, // Utilisez des cases à cocher
-                'query_builder' => function (BossRepository $er) use ($options) {
-                    // Filtrer les boss en fonction du RaidTier sélectionné
-                    return $er->createQueryBuilder('b')
-                        ->orderBy('b.orderInRaid', 'ASC');
-                },
-            ])
             ->add('mode', ChoiceType::class, [
                 'choices' => [
                     'Normal' => 'Normal',
