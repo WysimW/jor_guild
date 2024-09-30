@@ -28,7 +28,7 @@ class RaidController extends AbstractController
     {
         $raids = $em->getRepository(Raid::class)->findAll();
 
-        return $this->render('admin/raids_list.html.twig', [
+        return $this->render('admin/raid/raids_list.html.twig', [
             'raids' => $raids,
         ]);
     }
@@ -71,7 +71,7 @@ class RaidController extends AbstractController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        return $this->render('admin/new_raid.html.twig', [
+        return $this->render('admin/raid/new_raid.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -89,7 +89,7 @@ class RaidController extends AbstractController
             return $this->redirectToRoute('admin_raids_list');
         }
 
-        return $this->render('admin/edit_raid.html.twig', [
+        return $this->render('admin/raid/edit_raid.html.twig', [
             'form' => $form->createView(),
             'raid' => $raid,
         ]);

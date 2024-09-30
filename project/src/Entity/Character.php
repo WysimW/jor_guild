@@ -43,10 +43,19 @@ class Character
     #[Groups(['character:read', 'raid:read'])]
     private ?Classe $classe = null;
 
+    /**
+     * @var Collection<int, CharacterProfession>
+     */
+    #[ORM\OneToMany(mappedBy: 'character', targetEntity: CharacterProfession::class, cascade: ['persist', 'remove'])]
+    #[Groups(['character:read', 'character:write'])]
+    private Collection $characterProfessions;
+
     public function __construct()
     {
         $this->raidRoles = new ArrayCollection();
         $this->raidRegisters = new ArrayCollection();
+        $this->characterProfessions = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -140,6 +149,36 @@ class Character
     public function setClasse(?Classe $classe): static
     {
         $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CharacterProfession>
+     */
+    public function getCharacterProfessions(): Collection
+    {
+        return $this->characterProfessions;
+    }
+
+    public function addCharacterProfession(CharacterProfession $characterProfession): static
+    {
+        if (!$this->characterProfessions->contains($characterProfession)) {
+            $this->characterProfessions->add($characterProfession);
+            $characterProfession->setCharacter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterProfession(CharacterProfession $characterProfession): static
+    {
+        if ($this->characterProfessions->removeElement($characterProfession)) {
+            // set the owning side to null (unless already changed)
+            if ($characterProfession->getCharacter() === $this) {
+                $characterProfession->setCharacter(null);
+            }
+        }
 
         return $this;
     }

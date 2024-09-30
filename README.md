@@ -11,7 +11,7 @@ docker-compose up -d
 `docker exec -it CONTAINER_NAME bash`
 
 docker exec -it jor_react_frontend bash
-docker exec -it jor_symfony bash cd project
+docker exec -it jor_symfony bash
 
 docker-compose down
 docker-compose up --build

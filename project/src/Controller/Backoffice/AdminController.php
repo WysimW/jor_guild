@@ -47,7 +47,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        return $this->render('admin/new_extension.html.twig', [
+        return $this->render('admin/raid/new_extension.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -67,7 +67,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        return $this->render('admin/new_raidtier.html.twig', [
+        return $this->render('admin/raid/new_raidtier.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -101,7 +101,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_dashboard');
         }
 
-        return $this->render('admin/new_boss.html.twig', [
+        return $this->render('admin/raid/new_boss.html.twig', [
             'form' => $form->createView(),
         ]);
     }

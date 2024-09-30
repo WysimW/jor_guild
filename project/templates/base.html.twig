@@ -41,6 +41,14 @@
                             <li class="submenu__item"><a href="{{ path('admin_extension_new') }}">Nouvelle Extension</a></li>
                         </ul>
                     </li>
+                    {# Nouvelle Entrée pour Professions #}
+    <li class="nav__item nav__item--has-submenu">
+        <a href="#"><i class="fas fa-user-tie"></i> Gestion des Professions <i class="fas fa-chevron-down"></i></a>
+        <ul class="submenu">
+            <li class="submenu__item"><a href="{{ path('admin_profession_list') }}">Liste des Professions</a></li>
+            <li class="submenu__item"><a href="{{ path('admin_profession_new') }}">Nouvelle Profession</a></li>
+        </ul>
+    </li>
                 </ul>
             </nav>
         </aside>
