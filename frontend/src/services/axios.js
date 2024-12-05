@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api.guild-jor.fr/api', // L'URL de votre API Symfony
+    baseURL: process.env.REACT_APP_API_URL, // Utilisation de la variable d'environnement
     headers: {
         'Content-Type': 'application/json',
     },

@@ -44,12 +44,33 @@ class Raid
     #[Groups(['raid:read'])] // Inclure cet ID dans le groupe "raid:read"
     private ?string $mode = null;
 
+
+    #[ORM\ManyToOne(inversedBy: 'raids')]
+    private ?RaidTier $raidtier = null;
+
+    /**
+     * @var Collection<int, Boss>
+     */
+    #[ORM\ManyToMany(targetEntity: Boss::class, inversedBy: 'raids')]
+    private Collection $downBosses;
+
     #[ORM\Column(nullable: true)]
     private ?bool $isArchived = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wlogLink = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wanalyzerLink = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $wipefestLink = null;
+
 
     public function __construct()
     {
         $this->raidRegisters = new ArrayCollection();
+        $this->downBosses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +175,43 @@ class Raid
         return $this;
     }
 
+
+    public function getRaidtier(): ?RaidTier
+    {
+        return $this->raidtier;
+    }
+
+    public function setRaidtier(?RaidTier $raidtier): static
+    {
+        $this->raidtier = $raidtier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Boss>
+     */
+    public function getDownBosses(): Collection
+    {
+        return $this->downBosses;
+    }
+
+    public function addDownBoss(Boss $downBoss): static
+    {
+        if (!$this->downBosses->contains($downBoss)) {
+            $this->downBosses->add($downBoss);
+        }
+
+        return $this;
+    }
+
+    public function removeDownBoss(Boss $downBoss): static
+    {
+        $this->downBosses->removeElement($downBoss);
+        return $this;
+    }
+    
+    
     public function isArchived(): ?bool
     {
         return $this->isArchived;
@@ -162,6 +220,43 @@ class Raid
     public function setArchived(?bool $isArchived): static
     {
         $this->isArchived = $isArchived;
+
+
+        return $this;
+    }
+
+    public function getWlogLink(): ?string
+    {
+        return $this->wlogLink;
+    }
+
+    public function setWlogLink(?string $wlogLink): static
+    {
+        $this->wlogLink = $wlogLink;
+
+        return $this;
+    }
+
+    public function getWanalyzerLink(): ?string
+    {
+        return $this->wanalyzerLink;
+    }
+
+    public function setWanalyzerLink(?string $wanalyzerLink): static
+    {
+        $this->wanalyzerLink = $wanalyzerLink;
+
+        return $this;
+    }
+
+    public function getWipefestLink(): ?string
+    {
+        return $this->wipefestLink;
+    }
+
+    public function setWipefestLink(?string $wipefestLink): static
+    {
+        $this->wipefestLink = $wipefestLink;
 
         return $this;
     }

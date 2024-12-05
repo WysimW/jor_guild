@@ -3,7 +3,6 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Importer les styles de tippy.js
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'; // Icône de suppression
-import './Dashboard.css'; // Importer le fichier de styles
 import axios from '../../services/axios';
 
 const CharacterList = ({ characters, refreshCharacters }) => {
@@ -66,7 +65,8 @@ const CharacterList = ({ characters, refreshCharacters }) => {
         <div className="character-list">
             <h3>Liste de personnages</h3>
             {/* Notification */}
-            {message && <p className="notification">{message}</p>} {/* Afficher le message */}
+            {message && <p className="notification">{message}
+                </p>} {/* Afficher le message */}
 
             {characters.length > 0 ? (
                 <ul className="character-list-items">

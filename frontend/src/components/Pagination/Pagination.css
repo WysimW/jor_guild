@@ -1,0 +1,29 @@
+/* Pagination.css */
+
+/* Styles pour la pagination */
+.raid-history-container .pagination {
+    bottom:10px;
+}
+
+.pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    background-color: rgba(15, 15, 15, 0.8);
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: var(--color-red);
+    color: #fff;
+}
+
+.pagination button:hover {
+    background-color: var(--color-gold);
+    color:black;
+}

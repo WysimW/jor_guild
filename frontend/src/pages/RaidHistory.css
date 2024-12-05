@@ -1,0 +1,22 @@
+.raid-history-container {
+    padding: 20px;
+    position: relative;
+    background-image: url('../../public/images/chtun.jpg'); /* Image de fond */
+    background-size: cover;
+    background-position: center;
+    min-height: 80vh;
+    color:var(--text-color);
+    display: flex;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.raid-history-wrapper {
+    max-width: 1080px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../services/axios';
-import './Dashboard.css'; // Importer le fichier de styles
 
 const CharacterForm = ({ refreshCharacters }) => {
     const [name, setName] = useState('');

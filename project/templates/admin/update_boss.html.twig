@@ -1,0 +1,25 @@
+{# templates/admin/update_boss_status.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mettre à Jour le Statut du Boss{% endblock %}
+
+{% block body %}
+    <h1>Mettre à Jour le Statut du Boss: {{ boss.name }}</h1>
+
+    <form action="{{ path('admin_boss_update_status', {'id': boss.id}) }}" method="POST">
+        <label for="difficulty">Difficulté:</label>
+        <select name="difficulty" id="difficulty">
+            <option value="Normal">Normal</option>
+            <option value="Héroïque">Héroïque</option>
+            <option value="Mythique">Mythique</option>
+        </select>
+
+        <label for="defeated">Vaincu:</label>
+        <select name="defeated" id="defeated">
+            <option value="false">Non</option>
+            <option value="true">Oui</option>
+        </select>
+
+        <button type="submit">Mettre à Jour</button>
+    </form>
+{% endblock %}

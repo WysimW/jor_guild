@@ -1,0 +1,60 @@
+{# templates/admin/edit_raid.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer le Raid{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">Éditer le Raid {{ raid.title }}</h1>
+    <div class="form-container">
+        {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+                {{ form_errors(form.title) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.date) }}
+                {{ form_widget(form.date) }}
+                {{ form_errors(form.date) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.mode) }}
+                {{ form_widget(form.mode) }}
+                {{ form_errors(form.mode) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.raidTier) }}
+                {{ form_widget(form.raidTier) }}
+                {{ form_errors(form.raidTier) }}
+            </div>
+<div class="form-group">
+    {{ form_label(form.downBosses) }}
+    <div class="checkbox-group">
+        {% for boss in form.downBosses %}
+            <div class="checkbox-item">
+                {{ form_widget(boss) }}
+                {{ form_label(boss) }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_errors(form.downBosses) }}
+</div>
+            <div class="form-group">
+                {{ form_label(form.wlogLink) }}
+                {{ form_widget(form.wlogLink) }}
+                {{ form_errors(form.wlogLink) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.wanalyzerLink) }}
+                {{ form_widget(form.wanalyzerLink) }}
+                {{ form_errors(form.wanalyzerLink) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.wipeFestLink) }}
+                {{ form_widget(form.wipeFestLink) }}
+                {{ form_errors(form.wipeFestLink) }}
+            </div>
+            <button class="btn">Enregistrer les modifications</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

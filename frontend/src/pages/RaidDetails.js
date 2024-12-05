@@ -5,6 +5,7 @@ import tippy from 'tippy.js'; // Importer tippy.js pour les infobulles et popups
 import 'tippy.js/dist/tippy.css'; // Importer les styles de tippy.js
 import '../styles/RaidDetails.css';
 import '../styles/Popup.css';
+import RaidParticipantsList from 'components/RaidParticipantsList/RaidParticipantsList'; // Importer le nouveau sous-composant
 
 const RaidDetails = () => {
     const { id } = useParams(); // Récupérer l'ID du raid depuis l'URL
@@ -22,18 +23,6 @@ const RaidDetails = () => {
     const [userRegistration, setUserRegistration] = useState(null); // Stocker l'inscription de l'utilisateur
     const [raidDetailsAbsent, setRaidDetailsAbsent] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState(""); // Stocker le statut sélectionné
-
-
-    const slugify = (text) => {
-        return text
-            .toString()                                    // Convertir en chaîne
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Supprimer les accents
-            .toLowerCase()                                 // Tout en minuscules
-            .trim()                                        // Supprimer les espaces en début et fin
-            .replace(/\s+/g, '-')                          // Remplacer les espaces par des tirets
-            .replace(/[^\w\-]+/g, '')                      // Supprimer les caractères non-alphanumériques
-            .replace(/\-\-+/g, '-');                       // Remplacer les doubles tirets par un seul
-    };
     
     // Fetch user's characters
     useEffect(() => {
@@ -279,12 +268,7 @@ const RaidDetails = () => {
             setShowRegisterPopup(false); // Ferme le popup si le clic est en dehors du contenu
         }
     };
-
-
-
-
-    // Classer les rôles selon leur priorité (Tank > Heal > DPS)
-    const sortedRoles = Object.keys(sortedByRole).sort((a, b) => rolePriority[a] - rolePriority[b]);
+    console.log(raidDetails)
 
     return (
         <div className="raid-details-container">
@@ -314,34 +298,7 @@ const RaidDetails = () => {
                 <p className="raid-details__description">{raidDetails.description}</p>
 
                 <h3 className="raid-details__subheading">Liste des inscrits</h3>
-                <div className="raid-details__grid">
-                    {sortedRoles.map((role) => (
-                        <div key={role} className="raid-details__role-column">
-                            <h4 className="raid-details__role-title">
-                                {role} ({sortedByRole[role].length}) {/* Afficher le nombre de personnages */}
-                            </h4>
-                            <ul>
-                                {sortedByRole[role].map(({ character, specialization }) => (
-                                    <li
-                                        key={character.id}
-                                        className={`character-badge character-${slugify(character.classe.name)}`}
-                                        data-tippy-content={`Classe: ${character.classe.name}, Spécialisation: ${specialization}`} // Utiliser l'attribut data-tippy-content pour afficher la classe et la spécialisation
-                                    >
-                                        <span className="character-badge__name">
-                                            {character.name}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                    <div className="raid-details-absent-container">
-
-
-
-                    </div>
-
-                </div>
+                <RaidParticipantsList sortedByRole={sortedByRole} />
                 <h3 className="raid-details__subheading">Absents & Incertains</h3>
                 <ul className="raid-details__list">
                     {raidDetailsAbsent.inscriptions.map((inscription) => (

@@ -4,19 +4,22 @@ import { useAuth } from './hooks/useAuth';
 import './App.css';  // Import the reset CSS first
 import './styles/Blizzard.css';  // Import the reset CSS first
 import Home from './pages/Home';
-import SignUp from './components/Auth/SignUp';
-import Login from './components/Auth/Login';
-import Dashboard from './components/Dashboard/Dashboard'; // Une page pour l'utilisateur connecté
-import Header from './components/Core/Header';
-import Footer from './components/Core/Footer';
+import SignUp from 'pages/Auth/SignUp';
+import Login from 'pages/Auth/Login';
+import Dashboard from 'pages/Dashboard/Dashboard'; // Une page pour l'utilisateur connecté
+import Header from './components/Header/Header';
+import Footer from 'components/Footer/Footer';
+
 import RaidList from './pages/RaidList'; // Page pour afficher la liste des raids
 import RaidDetails from './pages/RaidDetails'; // Page pour afficher les détails d'un raid
 import RaidCalendar from './pages/RaidCalendar'; // Page pour afficher le calendrier des raids
+import RaidHistory from './pages/RaidHistory'; // Importer le composant d'historique
+import AuthWrapper from './components/AuthWrapper/AuthWrapper'; // Importer AuthWrapper
+
 import { UserProvider } from './contexts/UserContext';
 import { Helmet } from 'react-helmet';
 
 const App = () => {
-    const { token } = useAuth();
 
     // Route privée qui redirige vers /login si l'utilisateur n'est pas connecté
     const PrivateRoute = ({ children }) => {
@@ -42,6 +45,8 @@ const App = () => {
         <Router>
             <Layout>
                 <div className="App">
+                <AuthWrapper>
+
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/signup" element={<SignUp />} />
@@ -50,7 +55,10 @@ const App = () => {
                         <Route path="/raid/:id" element={<PrivateRoute><RaidDetails /></PrivateRoute>} /> {/* Route vers les détails d'un raid */}
                         <Route path="/raid/calendar" element={<PrivateRoute><RaidCalendar /></PrivateRoute>} /> {/* Route vers le calendrier des raids */}
                         <Route path="/dashboard" element={<PrivateRoute><UserProvider><Dashboard /></UserProvider></PrivateRoute>} /> {/* Route protégée pour le Dashboard */}
+                        <Route path="/raids/history" element={<PrivateRoute><RaidHistory /></PrivateRoute>} />
                     </Routes>
+                    </AuthWrapper>
+
                 </div>
             </Layout>
         </Router>

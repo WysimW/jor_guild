@@ -11,7 +11,7 @@ docker-compose up -d
 `docker exec -it CONTAINER_NAME bash`
 
 docker exec -it jor_react_frontend bash
-docker exec -it jor_symfony bash
+docker exec -it jor_symfony bash cd project
 
 docker-compose down
 docker-compose up --build
@@ -19,6 +19,7 @@ docker-compose up --build
 
 php bin/console make:entity
 
+php bin/console doctrine:migrations:diff
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 
